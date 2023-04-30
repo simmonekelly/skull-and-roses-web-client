@@ -1,12 +1,15 @@
 import "./App.css";
-import io from "socket.io-client";
+import { io, Socket } from "socket.io-client";
+import React from "react";
 import { useEffect, useState } from "react";
 import SkullHero from "./images/SkullHero.jpg";
-const socket = io.connect("http://localhost:8080");
+// import { RoseCard } from "./components/RoseCard";
+import { PlayerView } from "./pages/PlayerView";
+const socket = io("http://localhost:8080");
 
 function App() {
-  const [topCard, setTopCard] = useState("");
-  const [pickedCards, setPickedCards] = useState([]);
+  const [topCard, setTopCard] = useState(Boolean);
+  const [pickedCards, setPickedCards] = useState(Array);
 
   //opponents cards
   const [oppTopCard, setOppTopCard] = useState("");
@@ -24,13 +27,13 @@ function App() {
     socket.emit("card_picked", { topCard, pickedCards });
   };
 
-  const setCard = (id, isRose) => {
+  const setCard = (id: number, isRose: boolean) => {
     setTopCard(isRose);
     setPickedCards([...pickedCards, id]);
   };
 
   useEffect(() => {
-    socket.on("display_picked_card", (data) => {
+    socket.on("display_picked_card", (data: any) => {
       setOppTopCard(data.topCard);
       setOppPickedCards(data.pickedCards);
     });
@@ -64,6 +67,7 @@ function App() {
         <div>Picked Cards: {oppPickedCards}</div>
         <div>Cards Left: {4 - oppPickedCards.length}</div>
       </div>
+      <PlayerView />
     </div>
   );
 }
