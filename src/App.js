@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import io from "socket.io-client";
+import { useEffect } from "react";
+
+const socket = io.connect("http://localhost:8080");
 
 function App() {
+  const confirmDeck = () => {
+    console.log("deck confirmed");
+    socket.emit("confirm_deck", { message: "confirmed deck" });
+  };
+
+  useEffect(() => {
+    socket.on("display_deck", (data) => {
+      alert(data.message);
+    });
+  }); //, [socket]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>Create Game Room Buton</div>
+      <div>Game Room With Up to 6 People</div>
+      <div>
+        <div>rose</div>
+        <div>rose</div>
+        <div>skull</div>
+        <div>rose</div>
+      </div>
+      <button onClick={confirmDeck}>Submit</button>
     </div>
   );
 }
