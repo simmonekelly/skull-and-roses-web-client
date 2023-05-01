@@ -1,8 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { io } from "socket.io-client";
-import SkullHero from "./images/SkullHero.jpg";
 import { PlayerView } from "./pages/PlayerView";
 import { Home } from "./pages/Home";
 
@@ -32,9 +31,10 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Skull & Roses</h1>
-      <img style={{ width: 200 }} alt="home-page-hero" src={SkullHero} />
       <BrowserRouter>
+        <Link to="/">
+          <h1>Skull & Roses</h1>
+        </Link>
         <Routes>
           <Route
             path="/"

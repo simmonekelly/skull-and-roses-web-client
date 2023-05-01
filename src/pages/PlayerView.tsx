@@ -45,6 +45,8 @@ export const PlayerView: React.FC<Props> = ({ room }) => {
     <div>
       <h1>Player View</h1>
       {/* how to see multiple opps? */}
+      <h2>Room Name:</h2>
+      <h3>{room}</h3>
       <div>
         Opponents Cards
         <div>Top Card: {oppTopCard ? "skull" : "rose"}</div>
