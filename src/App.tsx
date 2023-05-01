@@ -17,6 +17,10 @@ function App() {
     socket.emit("create_room");
   };
 
+  const removeRoomId = () => {
+    socket.emit("leave_room", { roomId });
+  };
+
   useEffect(() => {
     socket.on("user_connected", (data: any) => {
       console.log(`user connected data: ${data.userId}`);
@@ -30,6 +34,10 @@ function App() {
       console.log(`room created data: ${data.roomToJoin} and ${socket.id}`);
       setRoomId(data.roomToJoin);
     });
+    socket.on("left_room", () => {
+      console.log("user left room");
+      setRoomId("");
+    });
   }, [userId, roomId]);
 
   // console.log({ roomId, userId });
@@ -37,7 +45,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Link to="/">
+        <Link to="/" onClick={removeRoomId}>
           <h1>Skull & Roses</h1>
         </Link>
         <Routes>
@@ -53,7 +61,9 @@ function App() {
           />
           <Route
             path="/room/:id"
-            element={<PlayerView room={roomId} user={userId} socket={socket} />}
+            element={
+              <PlayerView roomId={roomId} user={userId} socket={socket} />
+            }
           />
         </Routes>
       </BrowserRouter>

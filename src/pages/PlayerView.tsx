@@ -5,13 +5,13 @@ import { io } from "socket.io-client";
 const socket = io("http://localhost:8080");
 
 type Props = {
-  room?: string;
+  roomId?: string;
   user?: string;
   socket?: any; //Socket<DefaultEventsMap, DefaultEventsMap>
 };
 
-export const PlayerView: React.FC<Props> = ({ room, user, socket }) => {
-  console.log({ room, user });
+export const PlayerView: React.FC<Props> = ({ roomId, user, socket }) => {
+  console.log({ roomId, user });
   //users
   //   const [players, setPlayers] = useState(Array);
 
@@ -34,7 +34,7 @@ export const PlayerView: React.FC<Props> = ({ room, user, socket }) => {
   const submitCard = () => {
     // console.log(socket.id);
     console.log("card picked");
-    socket.emit("card_picked", { topCard, pickedCards, room, user });
+    socket.emit("card_picked", { topCard, pickedCards, roomId, user });
   };
 
   //   recieving data from back end of opponents card selection
@@ -51,7 +51,7 @@ export const PlayerView: React.FC<Props> = ({ room, user, socket }) => {
       <h1>Player View</h1>
       {/* how to see multiple opps? */}
       <h2>Room Name:</h2>
-      <h3>{room}</h3>
+      <h3>{roomId}</h3>
       <div>
         Opponents Cards
         <div>Top Card: {oppTopCard ? "skull" : "rose"}</div>
