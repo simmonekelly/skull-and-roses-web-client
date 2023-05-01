@@ -9,6 +9,7 @@ const socket = io("http://localhost:8080");
 
 function App() {
   const [roomId, setRoomId] = useState("");
+  const [userId, setUserId] = useState("");
 
   // //creating a new room
   const createNewRoom = () => {
@@ -17,17 +18,21 @@ function App() {
   };
 
   useEffect(() => {
+    socket.on("user_connected", (data: any) => {
+      console.log(`user connected data: ${data.userId}`);
+      setUserId(data.userId);
+    });
     socket.on("room-created", (data: any) => {
-      console.log(data);
+      console.log(`room created data: ${data.roomId} and ${socket.id}`);
       setRoomId(data.roomId);
     });
     socket.on("joined_room", (data: any) => {
-      console.log(data);
+      console.log(`room created data: ${data.roomToJoin} and ${socket.id}`);
       setRoomId(data.roomToJoin);
     });
-  });
+  }, [userId, roomId]);
 
-  console.log({ roomId });
+  // console.log({ roomId, userId });
 
   return (
     <div className="App">
@@ -46,7 +51,10 @@ function App() {
               />
             }
           />
-          <Route path="/room/:id" element={<PlayerView room={roomId} />} />
+          <Route
+            path="/room/:id"
+            element={<PlayerView room={roomId} user={userId} socket={socket} />}
+          />
         </Routes>
       </BrowserRouter>
     </div>

@@ -6,11 +6,15 @@ const socket = io("http://localhost:8080");
 
 type Props = {
   room?: string;
+  user?: string;
+  socket?: any; //Socket<DefaultEventsMap, DefaultEventsMap>
 };
 
-export const PlayerView: React.FC<Props> = ({ room }) => {
+export const PlayerView: React.FC<Props> = ({ room, user, socket }) => {
+  console.log({ room, user });
   //users
   //   const [players, setPlayers] = useState(Array);
+
   //current players cards
   const [topCard, setTopCard] = useState(Boolean);
   const [pickedCards, setPickedCards] = useState(Array);
@@ -19,7 +23,7 @@ export const PlayerView: React.FC<Props> = ({ room }) => {
   const [oppTopCard, setOppTopCard] = useState("");
   const [oppPickedCards, setOppPickedCards] = useState([]);
 
-  //setting the selected card
+  //setting the players selected card
   const setCard = (id: number, isRose: boolean) => {
     console.log("set card");
     setTopCard(isRose);
@@ -28,11 +32,12 @@ export const PlayerView: React.FC<Props> = ({ room }) => {
 
   //sending selected card to backend
   const submitCard = () => {
+    // console.log(socket.id);
     console.log("card picked");
-    socket.emit("card_picked", { topCard, pickedCards, room });
+    socket.emit("card_picked", { topCard, pickedCards, room, user });
   };
 
-  //recieving data from back end of opponents card selection
+  //   recieving data from back end of opponents card selection
   useEffect(() => {
     socket.on("display_picked_card", (data: any) => {
       console.log(data);
