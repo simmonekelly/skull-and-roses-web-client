@@ -10,37 +10,24 @@ const socket = io("http://localhost:8080");
 function App() {
   const [roomId, setRoomId] = useState("");
   const [userId, setUserId] = useState("");
+  const [users, setUsers] = useState(Array);
 
-  // //creating a new room
-  const createNewRoom = () => {
-    console.log("create new room");
-    socket.emit("create_room");
-  };
-
+  //leaving room
   const removeRoomId = () => {
-    socket.emit("leave_room", { roomId });
-  };
-
-  useEffect(() => {
-    socket.on("user_connected", (data: any) => {
-      console.log(`user connected data: ${data.userId}`);
-      setUserId(data.userId);
-    });
-    socket.on("room-created", (data: any) => {
-      console.log(`room created data: ${data.roomId} and ${socket.id}`);
-      setRoomId(data.roomId);
-    });
-    socket.on("joined_room", (data: any) => {
-      console.log(`room created data: ${data.roomToJoin} and ${socket.id}`);
-      setRoomId(data.roomToJoin);
-    });
-    socket.on("left_room", () => {
-      console.log("user left room");
+    socket.emit("leave_room", { roomId }, (roomId: any) => {
+      console.log(`user left room ${roomId}`);
+      //find user who left room from array
+      //remove them from the room
       setRoomId("");
     });
-  }, [userId, roomId]);
+  };
 
-  // console.log({ roomId, userId });
+  const displayUsers = (userId: any) => {
+    console.log("displayusers");
+    setUsers([...users, userId]);
+  };
+
+  console.log({ users, userId });
 
   return (
     <div className="App">
@@ -53,16 +40,27 @@ function App() {
             path="/"
             element={
               <Home
-                newRoomOnClick={createNewRoom}
+                // newRoomOnClick={createNewRoom}
                 roomId={roomId}
                 socket={socket}
+                setRoomId={setRoomId}
+                setUserId={setUserId}
+                displayUsers={displayUsers}
+                users={users}
+                userId={userId}
               />
             }
           />
           <Route
             path="/room/:id"
             element={
-              <PlayerView roomId={roomId} user={userId} socket={socket} />
+              <PlayerView
+                roomId={roomId}
+                user={userId}
+                socket={socket}
+                users={users}
+                displayUsers={displayUsers}
+              />
             }
           />
         </Routes>

@@ -2,19 +2,24 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Card } from "../components/Card";
 import { io } from "socket.io-client";
+import { UserDisplay } from "../components/UserDisplay";
 const socket = io("http://localhost:8080");
 
 type Props = {
   roomId?: string;
   user?: string;
   socket?: any; //Socket<DefaultEventsMap, DefaultEventsMap>
+  users?: any; //needs to be an array;
+  displayUsers?: any;
 };
 
-export const PlayerView: React.FC<Props> = ({ roomId, user, socket }) => {
-  console.log({ roomId, user });
-  //users
-  //   const [players, setPlayers] = useState(Array);
-
+export const PlayerView: React.FC<Props> = ({
+  roomId,
+  user,
+  socket,
+  users,
+  displayUsers,
+}) => {
   //current players cards
   const [topCard, setTopCard] = useState(Boolean);
   const [pickedCards, setPickedCards] = useState(Array);
@@ -25,31 +30,34 @@ export const PlayerView: React.FC<Props> = ({ roomId, user, socket }) => {
 
   //setting the players selected card
   const setCard = (id: number, isRose: boolean) => {
-    console.log("set card");
     setTopCard(isRose);
     setPickedCards([...pickedCards, id]);
   };
 
   //sending selected card to backend
   const submitCard = () => {
-    // console.log(socket.id);
     console.log("card picked");
     socket.emit("card_picked", { topCard, pickedCards, roomId, user });
   };
 
   //   recieving data from back end of opponents card selection
   useEffect(() => {
+    socket.on("joined_room", (data: any) => {
+      displayUsers(data);
+    });
     socket.on("display_picked_card", (data: any) => {
-      console.log(data);
       setOppTopCard(data.topCard);
       setOppPickedCards(data.pickedCards);
     });
   });
 
+  console.log({ users });
+
   return (
     <div>
       <h1>Player View</h1>
       {/* how to see multiple opps? */}
+      {users ? users.map((user: any) => <UserDisplay id={user} />) : null}
       <h2>Room Name:</h2>
       <h3>{roomId}</h3>
       <div>
