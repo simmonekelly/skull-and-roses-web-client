@@ -10,7 +10,7 @@ interface ServerToClientEvents {
 
 interface ClientToServerEvents {
   hello: (a: string) => void;
-  create_room: () => void;
+  create_room: (callback: (roomId: string) => void) => void;
 }
 
 type SocketContextProps = {
