@@ -3,11 +3,9 @@ import SkullHero from "../images/SkullHero.jpg";
 import { useContext } from "react";
 import { SocketContext } from "../context/SocketContext";
 
-type Props = {
-  roomId?: string;
-};
+type Props = {};
 
-export const Home: React.FC<Props> = ({ roomId }) => {
+export const Home: React.FC<Props> = () => {
   const socket = useContext(SocketContext);
 
   socket?.socket?.emit("hello", "this is the provider");

@@ -1,19 +1,6 @@
-import { useEffect, useState, createContext } from "react";
-import React from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { io, Socket } from "socket.io-client";
-
-type Props = {
-  children?: any;
-};
-
-type ContextProps = {
-  socket?: Socket<ServerToClientEvents, ClientToServerEvents>;
-};
-
-const SocketContext = createContext<ContextProps>({
-  socket: undefined,
-});
 
 interface ServerToClientEvents {
   noArg: () => void;
@@ -26,7 +13,21 @@ interface ClientToServerEvents {
   create_room: () => void;
 }
 
-const SocketContextProvider: React.FC<Props> = ({ children }) => {
+type SocketContextProps = {
+  socket?: Socket<ServerToClientEvents, ClientToServerEvents>;
+  //add more values we want to pass as context and type them out
+};
+
+export const SocketContext = createContext<SocketContextProps>({
+  socket: undefined,
+  //add default values
+});
+
+type Props = {
+  children: React.ReactNode;
+};
+
+export const SocketContextProvider: React.FC<Props> = ({ children }) => {
   const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
     "http://localhost:8080"
   );
@@ -36,11 +37,10 @@ const SocketContextProvider: React.FC<Props> = ({ children }) => {
     <SocketContext.Provider
       value={{
         socket,
+        //pass values we want to provide
       }}
     >
       {children}
     </SocketContext.Provider>
   );
 };
-
-export { SocketContextProvider, SocketContext };
