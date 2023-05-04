@@ -5,15 +5,18 @@ import { SocketContext } from "../context/SocketContext";
 type CreateRoomButtonProps = {};
 
 export const CreateRoomButton: React.FC<CreateRoomButtonProps> = () => {
-  const socket = useContext(SocketContext);
+  const { socket, setRoomId } = useContext(SocketContext);
   const navigate = useNavigate();
 
   const createNewRoom = () => {
     console.log("create new room");
-    socket?.socket?.emit("create_room", (roomId: string) => {
+    socket?.emit("create_room", (roomId: string) => {
       console.log({ roomId });
       navigate(`/room/${roomId}`);
+      setRoomId(roomId);
     });
+
+    //set room id to room id
   };
   return (
     <div>
