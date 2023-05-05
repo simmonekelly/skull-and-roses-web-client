@@ -18,14 +18,12 @@ type SocketContextProps = {
   socket?: Socket<ServerToClientEvents, ClientToServerEvents>;
   setRoomId: (roomId: string) => void;
   roomId: string | undefined;
-  //add more values we want to pass as context and type them out
 };
 
 export const SocketContext = createContext<SocketContextProps>({
   socket: undefined,
   setRoomId: () => {},
   roomId: undefined,
-  //add default values
 });
 
 type Props = {
@@ -48,7 +46,6 @@ export const SocketContextProvider: React.FC<Props> = ({ children }) => {
         socket,
         setRoomId,
         roomId,
-        //pass values we want to provide
       }}
     >
       {children}

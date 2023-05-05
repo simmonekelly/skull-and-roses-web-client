@@ -15,8 +15,6 @@ export const CreateRoomButton: React.FC<CreateRoomButtonProps> = () => {
       navigate(`/room/${roomId}`);
       setRoomId(roomId);
     });
-
-    //set room id to room id
   };
   return (
     <div>

@@ -9,7 +9,6 @@ export const Room: React.FC<RoomProps> = () => {
   const params = useParams();
   if (!roomId) {
     console.log("no room id");
-    console.log({ params });
     socket?.emit("join_room", params, (roomId: string) => {
       setRoomId(roomId);
     });

@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home, Room } from "./pages";
 import { SocketContextProvider } from "./context/SocketContext";
 import { Header } from "./components/Header";

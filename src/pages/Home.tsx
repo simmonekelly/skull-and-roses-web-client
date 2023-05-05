@@ -1,12 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import SkullHero from "../images/SkullHero.jpg";
-import { SocketContext } from "../context/SocketContext";
 import { CreateRoomButton } from "../components";
 
 type Props = {};
 
 export const Home: React.FC<Props> = () => {
-  const socket = useContext(SocketContext);
   return (
     <div>
       <div>
