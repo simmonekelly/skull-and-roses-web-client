@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { SocketContext } from "../context/SocketContext";
+import type { Room } from "../types/Types";
 
 type CreateRoomButtonProps = {};
 
@@ -10,10 +11,10 @@ export const CreateRoomButton: React.FC<CreateRoomButtonProps> = () => {
 
   const createNewRoom = () => {
     console.log("create new room");
-    socket?.emit("create_room", (roomId: string) => {
-      console.log({ roomId });
-      navigate(`/room/${roomId}`);
-      setRoomId(roomId);
+    socket?.emit("create_room", (room: Room) => {
+      console.log({ room });
+      navigate(`/room/${room.roomId}`);
+      setRoomId(room.roomId);
     });
   };
   return (

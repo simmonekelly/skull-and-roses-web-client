@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { SocketContext } from "../context/SocketContext";
 import { useParams } from "react-router-dom";
+import type { Room as RoomType } from "../types/Types";
 
 type RoomProps = {};
 
@@ -9,8 +10,9 @@ export const Room: React.FC<RoomProps> = () => {
   const params = useParams();
   if (!roomId) {
     console.log("no room id");
-    socket?.emit("join_room", params, (roomId: string) => {
-      setRoomId(roomId);
+    socket?.emit("join_room", params, (room: RoomType) => {
+      console.log(room);
+      setRoomId(room.roomId);
     });
   }
   return !roomId ? (

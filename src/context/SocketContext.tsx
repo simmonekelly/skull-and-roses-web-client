@@ -1,6 +1,7 @@
 import React, { useEffect, useState, createContext } from "react";
 import { useNavigate, useLocation, Params } from "react-router-dom";
 import { io, Socket } from "socket.io-client";
+import type { Room } from "../types/Types";
 
 interface ServerToClientEvents {
   noArg: () => void;
@@ -10,8 +11,8 @@ interface ServerToClientEvents {
 
 interface ClientToServerEvents {
   hello: (a: string) => void;
-  create_room: (callback: (roomId: string) => void) => void;
-  join_room: (params: Params, callback: (roomId: string) => void) => void;
+  create_room: (callback: (room: Room) => void) => void;
+  join_room: (params: Params, callback: (room: Room) => void) => void;
 }
 
 type SocketContextProps = {
