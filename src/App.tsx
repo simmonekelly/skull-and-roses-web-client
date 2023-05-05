@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-import { Home } from "./pages/Home";
+import { Home, Room } from "./pages";
 import { SocketContextProvider } from "./context/SocketContext";
 import { Header } from "./components/Header";
 
@@ -12,6 +12,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/room/:id" element={<Room />} />
           </Routes>
         </SocketContextProvider>
       </BrowserRouter>

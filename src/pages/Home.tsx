@@ -7,10 +7,6 @@ type Props = {};
 
 export const Home: React.FC<Props> = () => {
   const socket = useContext(SocketContext);
-
-  //   socket?.socket?.emit("hello", "this is the provider");
-  //can delet was just using for testing
-
   return (
     <div>
       <div>
