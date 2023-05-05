@@ -1,5 +1,5 @@
 import React, { useEffect, useState, createContext } from "react";
-import { useNavigate, useLocation, Params } from "react-router-dom";
+import { Params } from "react-router-dom";
 import { io, Socket } from "socket.io-client";
 import type { Room } from "../types/Types";
 
@@ -7,24 +7,28 @@ interface ServerToClientEvents {
   noArg: () => void;
   basicEmit: (a: number, b: string, c: Buffer) => void;
   withAck: (d: string, callback: (e: number) => void) => void;
+  new_user_joins: (room: Room) => void;
 }
 
 interface ClientToServerEvents {
   hello: (a: string) => void;
   create_room: (callback: (room: Room) => void) => void;
-  join_room: (params: Params, callback: (room: Room) => void) => void;
+  join_room: (
+    roomToJoin: string | undefined,
+    callback: (room: Room) => void
+  ) => void;
 }
 
 type SocketContextProps = {
   socket?: Socket<ServerToClientEvents, ClientToServerEvents>;
-  setRoomId: (roomId: string) => void;
-  roomId: string | undefined;
+  setRoom: (room: Room) => void;
+  room: Room | undefined;
 };
 
 export const SocketContext = createContext<SocketContextProps>({
   socket: undefined,
-  setRoomId: () => {},
-  roomId: undefined,
+  setRoom: () => {},
+  room: undefined,
 });
 
 type Props = {
@@ -32,21 +36,23 @@ type Props = {
 };
 
 export const SocketContextProvider: React.FC<Props> = ({ children }) => {
-  const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-    "http://localhost:8080"
-  );
+  const [room, setRoom] = useState<Room>();
+  const [socket, setSocket] = useState<Socket>();
 
-  const [roomId, setRoomId] = useState<string>();
-
-  useEffect(() => {}, []);
-  console.log({ socket, roomId });
+  useEffect(() => {
+    const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
+      "http://localhost:8080"
+    );
+    setSocket(socket);
+  }, []);
+  //console.log({ socket, room });
 
   return (
     <SocketContext.Provider
       value={{
         socket,
-        setRoomId,
-        roomId,
+        setRoom,
+        room,
       }}
     >
       {children}

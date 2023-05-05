@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home, Room } from "./pages";
 import { SocketContextProvider } from "./context/SocketContext";
-import { Header } from "./components/Header";
+import { Header } from "./components";
 
 function App() {
   return (

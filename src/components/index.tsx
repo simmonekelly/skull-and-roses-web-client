@@ -1,3 +1,5 @@
 import { CreateRoomButton } from "./NewRoomButton";
+import { Header } from "./Header";
+import { JoinRoom } from "./JoinRoom";
 
-export { CreateRoomButton };
+export { CreateRoomButton, Header, JoinRoom };
