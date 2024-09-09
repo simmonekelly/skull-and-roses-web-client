@@ -1,5 +1,10 @@
-import React, { useEffect, useState, createContext } from "react";
-import { Params } from "react-router-dom";
+import React, {
+  useEffect,
+  useState,
+  createContext,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { io, Socket } from "socket.io-client";
 import type {
   Room,
@@ -7,25 +12,33 @@ import type {
   ClientToServerEvents,
 } from "../types/Types";
 
-type SocketContextProps = {
+type SocketContextValue = {
   socket?: Socket<ServerToClientEvents, ClientToServerEvents>;
   setRoom: (room: Room) => void;
   room: Room | undefined;
+  currentUser: any;
+  otherUsers: any;
+  setCurrentUser: Dispatch<SetStateAction<string | undefined>>;
+  setOtherUsers: Dispatch<SetStateAction<undefined>>;
 };
 
-export const SocketContext = createContext<SocketContextProps>({
+export const SocketContext = createContext<SocketContextValue>({
   socket: undefined,
   setRoom: () => {},
   room: undefined,
+  currentUser: undefined,
+  otherUsers: undefined,
+  setCurrentUser: () => {},
+  setOtherUsers: () => {},
 });
 
-type Props = {
-  children: React.ReactNode;
-};
-
-export const SocketContextProvider: React.FC<Props> = ({ children }) => {
+export const SocketContextProvider: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
   const [room, setRoom] = useState<Room>();
   const [socket, setSocket] = useState<Socket>();
+  const [currentUser, setCurrentUser] = useState<string>();
+  const [otherUsers, setOtherUsers] = useState();
 
   useEffect(() => {
     const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
@@ -41,6 +54,10 @@ export const SocketContextProvider: React.FC<Props> = ({ children }) => {
         socket,
         setRoom,
         room,
+        currentUser,
+        otherUsers,
+        setCurrentUser,
+        setOtherUsers,
       }}
     >
       {children}

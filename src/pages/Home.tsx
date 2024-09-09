@@ -2,9 +2,7 @@ import React from "react";
 import SkullHero from "../images/SkullHero.jpg";
 import { CreateRoomButton, JoinRoom } from "../components";
 
-type Props = {};
-
-export const Home: React.FC<Props> = () => {
+export const Home: React.FC = () => {
   return (
     <div>
       <div>

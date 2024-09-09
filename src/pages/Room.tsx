@@ -6,7 +6,7 @@ import type { Room as RoomType } from "../types/Types";
 type RoomProps = {};
 
 export const Room: React.FC<RoomProps> = () => {
-  const { room, socket, setRoom } = useContext(SocketContext);
+  const { room, socket, setRoom, currentUser } = useContext(SocketContext);
   const params = useParams();
 
   useEffect(() => {
@@ -16,14 +16,18 @@ export const Room: React.FC<RoomProps> = () => {
       socket?.emit("join_room", roomToJoin, (room: RoomType) => {
         console.log(room);
         setRoom(room);
+        //add set current user
       });
     }
-  });
+  }, [room, params.id, socket, setRoom]);
 
+  //why does it not hit this when creating room
   socket?.on("new_user_joins", (room: RoomType) => {
-    console.log(room);
+    console.log({ room, action: "new user joins" });
     setRoom(room);
+    //add current user set
   });
+  console.log({ room, currentUser });
 
   return !room ? (
     <div>Room Loading</div>
@@ -31,6 +35,7 @@ export const Room: React.FC<RoomProps> = () => {
     <div>
       <h1>Room: {room.roomId} </h1>
       <p>Players in Room: {room.players.length}</p>
+      <p>Current User: {currentUser}</p>
     </div>
   );
 };
