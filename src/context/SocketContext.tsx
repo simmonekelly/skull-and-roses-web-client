@@ -10,35 +10,32 @@ import type {
   Room,
   ServerToClientEvents,
   ClientToServerEvents,
+  CurrentUser,
+  User,
 } from "../types/Types";
 
 type SocketContextValue = {
   socket?: Socket<ServerToClientEvents, ClientToServerEvents>;
-  setRoom: (room: Room) => void;
-  room: Room | undefined;
-  currentUser: any;
-  otherUsers: any;
-  setCurrentUser: Dispatch<SetStateAction<string | undefined>>;
-  setOtherUsers: Dispatch<SetStateAction<undefined>>;
+  setRoom: Dispatch<SetStateAction<Room | undefined>>;
+  // (room: Room) => void;
+  room?: Room;
+  currentUser?: CurrentUser;
+  otherUsers?: User[];
+  setCurrentUser: Dispatch<SetStateAction<CurrentUser | undefined>>;
+  setOtherUsers: Dispatch<SetStateAction<User[] | undefined>>;
 };
 
-export const SocketContext = createContext<SocketContextValue>({
-  socket: undefined,
-  setRoom: () => {},
-  room: undefined,
-  currentUser: undefined,
-  otherUsers: undefined,
-  setCurrentUser: () => {},
-  setOtherUsers: () => {},
-});
+export const SocketContext = createContext<SocketContextValue>(
+  {} as SocketContextValue
+);
 
 export const SocketContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const [room, setRoom] = useState<Room>();
   const [socket, setSocket] = useState<Socket>();
-  const [currentUser, setCurrentUser] = useState<string>();
-  const [otherUsers, setOtherUsers] = useState();
+  const [currentUser, setCurrentUser] = useState<CurrentUser>();
+  const [otherUsers, setOtherUsers] = useState<User[]>();
 
   useEffect(() => {
     const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
