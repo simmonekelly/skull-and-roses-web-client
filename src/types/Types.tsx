@@ -3,6 +3,11 @@ export type Room = {
   players: [];
 };
 
+export type NewRoom = {
+  room: Room;
+  currentUser: string;
+};
+
 export interface ServerToClientEvents {
   noArg: () => void;
   basicEmit: (a: number, b: string, c: Buffer) => void;
@@ -12,7 +17,8 @@ export interface ServerToClientEvents {
 
 export interface ClientToServerEvents {
   hello: (a: string) => void;
-  create_room: (callback: (room: Room) => void) => void;
+  create_room: (callback: (newRoom: NewRoom) => void) => void;
+  // create_room: (callback: (room: Room) => void) => void;
   join_room: (
     roomToJoin: string | undefined,
     callback: (room: Room) => void
