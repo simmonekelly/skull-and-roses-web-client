@@ -8,11 +8,17 @@ export type CurrentUser = User;
 export type Room = {
   roomId: string;
   players: User[];
+  stockPile: string[];
 };
 
 export type NewRoom = {
   room: Room;
   currentUser: CurrentUser;
+};
+
+export type SubmittedCardData = {
+  cardText: string;
+  cardIndex: number;
 };
 
 export type JoinRoom = NewRoom;
@@ -22,6 +28,7 @@ export interface ServerToClientEvents {
   basicEmit: (a: number, b: string, c: Buffer) => void;
   withAck: (d: string, callback: (e: number) => void) => void;
   new_user_joins: (room: Room) => void;
+  update_room: (room: Room) => void;
 }
 
 export interface ClientToServerEvents {
@@ -30,5 +37,11 @@ export interface ClientToServerEvents {
   join_room: (
     roomToJoin: string | undefined,
     callback: (joinRoom: JoinRoom) => void
+  ) => void;
+  submit_card: (
+    currentRoom: string,
+    currentUser: string,
+    cardData: SubmittedCardData,
+    callback: (currentUser: User) => void
   ) => void;
 }
