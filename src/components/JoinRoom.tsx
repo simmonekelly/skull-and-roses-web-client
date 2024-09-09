@@ -1,18 +1,19 @@
 import React, { useContext, useState } from "react";
 import { SocketContext } from "../context/SocketContext";
 import { useNavigate } from "react-router-dom";
-import type { Room } from "../types/Types";
+import type { JoinRoom as JoinRoomType } from "../types/Types";
 
 export const JoinRoom: React.FC = () => {
-  const { socket, setRoom } = useContext(SocketContext);
+  const { socket, setRoom, setCurrentUser } = useContext(SocketContext);
   const navigate = useNavigate();
   const [roomToJoin, setRoomToJoin] = useState<string>();
 
   const joinRoom = () => {
     console.log("join room input");
-    socket?.emit("join_room", roomToJoin, (room: Room) => {
-      navigate(`/room/${room.roomId}`);
-      setRoom(room);
+    socket?.emit("join_room", roomToJoin, (joinRoom: JoinRoomType) => {
+      navigate(`/room/${joinRoom.room.roomId}`);
+      setRoom(joinRoom.room);
+      setCurrentUser(joinRoom.currentUser);
     });
   };
 
