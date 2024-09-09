@@ -8,6 +8,8 @@ export type NewRoom = {
   currentUser: string;
 };
 
+export type JoinRoom = NewRoom;
+
 export interface ServerToClientEvents {
   noArg: () => void;
   basicEmit: (a: number, b: string, c: Buffer) => void;
@@ -19,8 +21,12 @@ export interface ClientToServerEvents {
   hello: (a: string) => void;
   create_room: (callback: (newRoom: NewRoom) => void) => void;
   // create_room: (callback: (room: Room) => void) => void;
+  // join_room: (
+  //   roomToJoin: string | undefined,
+  //   callback: (room: Room) => void
+  // ) => void;
   join_room: (
     roomToJoin: string | undefined,
-    callback: (room: Room) => void
+    callback: (joinRoom: JoinRoom) => void
   ) => void;
 }
