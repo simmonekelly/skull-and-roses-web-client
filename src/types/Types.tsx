@@ -1,11 +1,18 @@
+export type User = {
+  id: string;
+  cards: string[];
+};
+
+export type CurrentUser = User;
+
 export type Room = {
   roomId: string;
-  players: [];
+  players: User[];
 };
 
 export type NewRoom = {
   room: Room;
-  currentUser: string;
+  currentUser: CurrentUser;
 };
 
 export type JoinRoom = NewRoom;
@@ -20,11 +27,6 @@ export interface ServerToClientEvents {
 export interface ClientToServerEvents {
   hello: (a: string) => void;
   create_room: (callback: (newRoom: NewRoom) => void) => void;
-  // create_room: (callback: (room: Room) => void) => void;
-  // join_room: (
-  //   roomToJoin: string | undefined,
-  //   callback: (room: Room) => void
-  // ) => void;
   join_room: (
     roomToJoin: string | undefined,
     callback: (joinRoom: JoinRoom) => void
