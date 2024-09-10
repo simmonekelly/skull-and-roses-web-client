@@ -1,6 +1,7 @@
 export type User = {
   id: string;
   cards: string[];
+  matStatus: boolean;
 };
 
 export type CurrentUser = User;
@@ -50,5 +51,12 @@ export interface ClientToServerEvents {
     currentUser: string,
     userGuess: number,
     callback: () => void
+  ) => void;
+  update_mat_status: (
+    currentRoom: string,
+    user: string,
+    currentUser: string,
+    updatedMatStatus: boolean,
+    callback: (updatedUser: User) => void
   ) => void;
 }

@@ -3,6 +3,7 @@ import { SocketContext } from "../context/SocketContext";
 import { Card } from "./Card";
 import { styled } from "styled-components";
 import { MakeGuessInput } from "./MakeGuessInput";
+import { UserMat } from "./UserMat";
 
 export const CurrentUser: React.FC = () => {
   const { currentUser } = useContext(SocketContext);
@@ -16,6 +17,7 @@ export const CurrentUser: React.FC = () => {
         {currentUser.cards.map((card, i) => (
           <Card card={card} index={i} key={i} />
         ))}
+        <UserMat shouldShow={currentUser.matStatus} />
       </CardContainer>
     </StyledUserSection>
   );

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { SocketContext } from "../context/SocketContext";
 import { OpponentCard } from "./OpponentCard";
 import { styled } from "styled-components";
+import { UserMat } from "./UserMat";
 
 export const OpponentsSection: React.FC = () => {
   const { currentUser, room: currentRoom } = useContext(SocketContext);
@@ -13,12 +14,13 @@ export const OpponentsSection: React.FC = () => {
     <StyledContainer>
       <h2>Other Players:</h2>
       <PlayersContainer>
-        {filteredPlayers.map((filteredPlayer, i) => (
+        {filteredPlayers.map((player, i) => (
           <StyledPlayerContainer>
-            <h3 key={i}>{filteredPlayer.id}</h3>
-            {filteredPlayer.cards.map((card, i) => (
+            <h3 key={i}>{player.id}</h3>
+            {player.cards.map((card, i) => (
               <OpponentCard key={i} />
             ))}
+            <UserMat shouldShow={player.matStatus} />
           </StyledPlayerContainer>
         ))}
       </PlayersContainer>
