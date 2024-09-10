@@ -20,7 +20,7 @@ export const Card: React.FC<CardProps> = ({ card, index }) => {
   const submitCard = (card: string, index: number) => {
     console.log(`submit card: ${card} at index ${index}`);
     const cardData: SubmittedCardData = { cardText: card, cardIndex: index };
-
+    setSelectedCard(false);
     socket?.emit(
       "submit_card",
       currentRoom.roomId,

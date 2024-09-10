@@ -7,6 +7,7 @@ import type {
 } from "../types/Types";
 import { Card } from "../components/Card";
 import { OpponentCard } from "../components/OpponentCard";
+import { StockPile } from "../components/StockPile";
 
 export const Room: React.FC = () => {
   const {
@@ -36,11 +37,6 @@ export const Room: React.FC = () => {
     setRoom(room);
   });
 
-  //event to update when any other update happens
-  socket?.on("update_room", (room: RoomType) => {
-    console.log({ currentRoom, room, action: "update room" });
-    setRoom(room);
-  });
   console.log({ currentRoom, currentUser });
   const isLoading = currentRoom === undefined || currentUser === undefined;
 
@@ -57,14 +53,7 @@ export const Room: React.FC = () => {
           <Card card={card} index={i} />
         ))}
         <br />
-        {currentRoom.stockPile.length > 0 && (
-          <>
-            <h3>Sock Pile:</h3>
-            {currentRoom.stockPile.map((card) => (
-              <p>{card}</p>
-            ))}
-          </>
-        )}
+        {currentRoom.stockPile.length > 0 && <StockPile />}
         <p>Opps Cards:</p>
         {currentRoom.players.length > 1 &&
           currentRoom.players
