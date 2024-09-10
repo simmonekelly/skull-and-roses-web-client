@@ -38,7 +38,7 @@ export const StockPile: React.FC = () => {
   }, [currentGuess, currentRoom.stockPile]);
 
   useEffect(() => {
-    if (guessResult === true) {
+    if (guessResult !== "waiting") {
       socket?.emit(
         "update_mat_status",
         currentRoom.roomId,

@@ -2,6 +2,7 @@ export type User = {
   id: string;
   cards: string[];
   matStatus: boolean;
+  gameControler: boolean;
 };
 
 export type CurrentUser = User;
@@ -31,6 +32,7 @@ export interface ServerToClientEvents {
   new_user_joins: (room: Room) => void;
   update_room: (room: Room) => void;
   update_countdown: (room: Room, user: string, userGuess: number) => void;
+  show_update_modal: () => void;
 }
 
 export interface ClientToServerEvents {

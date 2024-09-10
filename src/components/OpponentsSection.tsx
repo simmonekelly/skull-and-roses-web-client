@@ -17,9 +17,11 @@ export const OpponentsSection: React.FC = () => {
         {filteredPlayers.map((player, i) => (
           <StyledPlayerContainer>
             <h3 key={i}>{player.id}</h3>
-            {player.cards.map((card, i) => (
-              <OpponentCard key={i} />
-            ))}
+            <CardContainer>
+              {player.cards.map((card, i) => (
+                <OpponentCard key={i} />
+              ))}
+            </CardContainer>
             <UserMat shouldShow={player.matStatus} />
           </StyledPlayerContainer>
         ))}
@@ -27,6 +29,12 @@ export const OpponentsSection: React.FC = () => {
     </StyledContainer>
   );
 };
+
+const CardContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
 
 const StyledContainer = styled.div`
   display: flex;
@@ -44,4 +52,5 @@ const StyledPlayerContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 1rem;
+  width: 40%;
 `;
