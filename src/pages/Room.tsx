@@ -24,7 +24,7 @@ export const Room: React.FC = () => {
       console.log("no room id");
       const roomToJoin = params.id;
       socket?.emit("join_room", roomToJoin, (joinRoom: JoinRoomType) => {
-        console.log({ joinRoom });
+        // console.log({ joinRoom });
         setRoom(joinRoom.room);
         setCurrentUser(joinRoom.currentUser);
       });
@@ -33,7 +33,14 @@ export const Room: React.FC = () => {
 
   //event to update when new user joins
   socket?.on("new_user_joins", (room: RoomType) => {
-    console.log({ currentRoom, room, action: "new user joins" });
+    // console.log({ currentRoom, room, action: "new user joins" });
+    setRoom(room);
+  });
+
+  //event to update when any other update happens
+  //change event to update stockpile
+  socket?.on("update_room", (room: RoomType) => {
+    // console.log({ currentRoom, room, action: "update room" });
     setRoom(room);
   });
 
@@ -49,7 +56,6 @@ export const Room: React.FC = () => {
         <p>Players in Room: {currentRoom.players.length}</p>
         <CurrentUser />
         {currentRoom.stockPile.length > 0 && <StockPile />}
-        <p>Opps Cards:</p>
         {currentRoom.players.length > 1 && <OpponentsSection />}
       </div>
     );
