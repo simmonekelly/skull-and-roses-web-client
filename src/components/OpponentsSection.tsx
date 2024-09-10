@@ -11,19 +11,28 @@ export const OpponentsSection: React.FC = () => {
 
   return (
     <StyledContainer>
-      {filteredPlayers.map((filteredPlayer, i) => (
-        <StyledPlayerContainer>
-          <h3 key={i}>{filteredPlayer.id}</h3>
-          {filteredPlayer.cards.map((card, i) => (
-            <OpponentCard key={i} />
-          ))}
-        </StyledPlayerContainer>
-      ))}
+      <h2>Other Players:</h2>
+      <PlayersContainer>
+        {filteredPlayers.map((filteredPlayer, i) => (
+          <StyledPlayerContainer>
+            <h3 key={i}>{filteredPlayer.id}</h3>
+            {filteredPlayer.cards.map((card, i) => (
+              <OpponentCard key={i} />
+            ))}
+          </StyledPlayerContainer>
+        ))}
+      </PlayersContainer>
     </StyledContainer>
   );
 };
 
 const StyledContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const PlayersContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;

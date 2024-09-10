@@ -29,6 +29,7 @@ export interface ServerToClientEvents {
   withAck: (d: string, callback: (e: number) => void) => void;
   new_user_joins: (room: Room) => void;
   update_room: (room: Room) => void;
+  update_countdown: (room: Room, user: string, userGuess: number) => void;
 }
 
 export interface ClientToServerEvents {
@@ -43,5 +44,11 @@ export interface ClientToServerEvents {
     currentUser: string,
     cardData: SubmittedCardData,
     callback: (currentUser: User) => void
+  ) => void;
+  submit_guess: (
+    currentRoom: string,
+    currentUser: string,
+    userGuess: number,
+    callback: () => void
   ) => void;
 }
