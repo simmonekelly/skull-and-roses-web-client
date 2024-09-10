@@ -1,9 +1,14 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { SocketContext } from "../context/SocketContext";
-import { Room } from "../types/Types";
+import { User, Room } from "../types/Types";
 
 export const StockPile: React.FC = () => {
-  const { room: currentRoom, socket } = useContext(SocketContext);
+  const {
+    room: currentRoom,
+    socket,
+    setCurrentUser,
+    currentUser,
+  } = useContext(SocketContext);
   const [currentGuess, setCurrentGuess] = useState<number>(0);
   const [user, setUser] = useState<string>("");
 
@@ -26,10 +31,27 @@ export const StockPile: React.FC = () => {
     const skullIndex = currentRoom.stockPile.findIndex(
       (card) => card === "skull"
     );
-    const result = skullIndex > currentGuess - 1 ? "wins!" : "looses :(";
+
+    const result = skullIndex > currentGuess - 1 || skullIndex === -1;
 
     return result;
   }, [currentGuess, currentRoom.stockPile]);
+
+  useEffect(() => {
+    if (guessResult !== "waiting") {
+      socket?.emit(
+        "update_mat_status",
+        currentRoom.roomId,
+        user,
+        currentUser.id,
+        guessResult,
+        (updatedUser: User) => {
+          console.log("guess result emitted");
+          setCurrentUser(updatedUser);
+        }
+      );
+    }
+  }, [guessResult]);
 
   return (
     <div>
@@ -40,7 +62,7 @@ export const StockPile: React.FC = () => {
             Current Guess: {user} guessed {currentGuess}
           </p>
           <h4>
-            result : {user} {guessResult}
+            result : {user} {guessResult ? "win!" : "looses :("}
           </h4>
         </>
       )}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SocketContext } from "../context/SocketContext";
 import { useParams } from "react-router-dom";
 import type {
@@ -8,6 +8,7 @@ import type {
 import { StockPile } from "../components/StockPile";
 import { CurrentUser } from "../components/CurrentUserView";
 import { OpponentsSection } from "../components/OpponentsSection";
+import { UpdateModal } from "../components/UpdateModal";
 
 export const Room: React.FC = () => {
   const {
@@ -52,6 +53,7 @@ export const Room: React.FC = () => {
   } else {
     return (
       <div>
+        <UpdateModal />
         <h1>Room: {currentRoom.roomId} </h1>
         <p>Players in Room: {currentRoom.players.length}</p>
         <CurrentUser />
