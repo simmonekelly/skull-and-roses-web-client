@@ -5,9 +5,9 @@ import type {
   Room as RoomType,
   JoinRoom as JoinRoomType,
 } from "../types/Types";
-import { Card } from "../components/Card";
-import { OpponentCard } from "../components/OpponentCard";
 import { StockPile } from "../components/StockPile";
+import { CurrentUser } from "../components/CurrentUserView";
+import { OpponentsSection } from "../components/OpponentsSection";
 
 export const Room: React.FC = () => {
   const {
@@ -47,25 +47,10 @@ export const Room: React.FC = () => {
       <div>
         <h1>Room: {currentRoom.roomId} </h1>
         <p>Players in Room: {currentRoom.players.length}</p>
-        <p>Current User: {currentUser.id}</p>
-        <p>Your Cards:</p>
-        {currentUser.cards.map((card, i) => (
-          <Card card={card} index={i} />
-        ))}
-        <br />
+        <CurrentUser />
         {currentRoom.stockPile.length > 0 && <StockPile />}
         <p>Opps Cards:</p>
-        {currentRoom.players.length > 1 &&
-          currentRoom.players
-            .filter((player) => player.id !== currentUser.id)
-            .map((filteredPlayer) => (
-              <>
-                <h3>{filteredPlayer.id}</h3>
-                {filteredPlayer.cards.map((card) => (
-                  <OpponentCard />
-                ))}
-              </>
-            ))}
+        {currentRoom.players.length > 1 && <OpponentsSection />}
       </div>
     );
   }
