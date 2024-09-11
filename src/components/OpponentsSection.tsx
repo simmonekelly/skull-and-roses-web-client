@@ -21,21 +21,16 @@ export const OpponentsSection: React.FC = () => {
               {player.cards.map((card, i) => (
                 <OpponentCard key={i} />
               ))}
+              <MatContainer>
+                <UserMat status={player.matStatus} />
+              </MatContainer>
             </CardContainer>
-            <UserMat status={player.matStatus} />
           </StyledPlayerContainer>
         ))}
       </PlayersContainer>
     </StyledContainer>
   );
 };
-
-const CardContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
-
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -52,5 +47,21 @@ const StyledPlayerContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 1rem;
-  width: 40%;
+  width: 20%;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 10px;
+`;
+
+const CardContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+
+const MatContainer = styled.div`
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 4px;
 `;

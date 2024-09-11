@@ -4,6 +4,7 @@ import { SubmittedCardData, User } from "../types/Types";
 import FilterVintageRoundedIcon from "@mui/icons-material/FilterVintageRounded";
 import Button from "@mui/material/Button";
 import { styled } from "styled-components";
+import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 
 type CardProps = {
   card: string;
@@ -37,7 +38,11 @@ export const Card: React.FC<CardProps> = ({ card, index }) => {
   return (
     <Container>
       <h1 onClick={() => setSelectedCard(!selectedCard ? true : false)}>
-        {card === "rose" ? <FilterVintageRoundedIcon /> : "skull"}
+        {card === "rose" ? (
+          <FilterVintageRoundedIcon />
+        ) : (
+          <SmartToyOutlinedIcon />
+        )}
       </h1>
       {selectedCard && (
         <Button variant="outlined" onClick={() => submitCard(card, index)}>
