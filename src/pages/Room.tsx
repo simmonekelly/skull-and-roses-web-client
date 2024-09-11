@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { SocketContext } from "../context/SocketContext";
 import { useParams } from "react-router-dom";
 import type {
@@ -8,7 +8,7 @@ import type {
 import { StockPile } from "../components/StockPile";
 import { CurrentUser } from "../components/CurrentUserView";
 import { OpponentsSection } from "../components/OpponentsSection";
-import { UpdateModal } from "../components/UpdateModal";
+import { GuessResultModal } from "../components/GuessResultModal";
 
 export const Room: React.FC = () => {
   const {
@@ -25,7 +25,6 @@ export const Room: React.FC = () => {
       console.log("no room id");
       const roomToJoin = params.id;
       socket?.emit("join_room", roomToJoin, (joinRoom: JoinRoomType) => {
-        // console.log({ joinRoom });
         setRoom(joinRoom.room);
         setCurrentUser(joinRoom.currentUser);
       });
@@ -34,18 +33,21 @@ export const Room: React.FC = () => {
 
   //event to update when new user joins
   socket?.on("new_user_joins", (room: RoomType) => {
-    // console.log({ currentRoom, room, action: "new user joins" });
     setRoom(room);
   });
 
   //event to update when any other update happens
   //change event to update stockpile
   socket?.on("update_room", (room: RoomType) => {
-    // console.log({ currentRoom, room, action: "update room" });
     setRoom(room);
   });
 
-  console.log({ currentRoom, currentUser });
+  //TODO:
+  //styling
+  //create new game
+  //see why cards are not resetting
+  //when a user leaves
+
   const isLoading = currentRoom === undefined || currentUser === undefined;
 
   if (isLoading) {
@@ -53,7 +55,7 @@ export const Room: React.FC = () => {
   } else {
     return (
       <div>
-        <UpdateModal />
+        <GuessResultModal />
         <h1>Room: {currentRoom.roomId} </h1>
         <p>Players in Room: {currentRoom.players.length}</p>
         <CurrentUser />
