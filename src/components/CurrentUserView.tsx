@@ -27,6 +27,7 @@ const CardContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 `;
 
 const StyledUserSection = styled.div`

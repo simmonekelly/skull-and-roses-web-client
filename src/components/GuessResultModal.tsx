@@ -12,12 +12,7 @@ import {
 type Props = {};
 
 export const GuessResultModal: React.FC<Props> = () => {
-  const {
-    socket,
-    currentUser,
-    room: currentRoom,
-    setCurrentUser,
-  } = useContext(SocketContext);
+  const { socket, currentUser, room: currentRoom } = useContext(SocketContext);
   const [currentGuess, setCurrentGuess] = useState<number>(0);
   const [guessingUserId, setGuessingUserId] = useState<string>("");
 

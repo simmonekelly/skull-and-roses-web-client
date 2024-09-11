@@ -1,6 +1,9 @@
 import React, { useContext, useState } from "react";
 import { SocketContext } from "../context/SocketContext";
 import { SubmittedCardData, User } from "../types/Types";
+import FilterVintageRoundedIcon from "@mui/icons-material/FilterVintageRounded";
+import Button from "@mui/material/Button";
+import { styled } from "styled-components";
 
 type CardProps = {
   card: string;
@@ -32,13 +35,27 @@ export const Card: React.FC<CardProps> = ({ card, index }) => {
   };
 
   return (
-    <div>
+    <Container>
       <h1 onClick={() => setSelectedCard(!selectedCard ? true : false)}>
-        {card}
+        {card === "rose" ? <FilterVintageRoundedIcon /> : "skull"}
       </h1>
       {selectedCard && (
-        <button onClick={() => submitCard(card, index)}>submit</button>
+        <Button variant="outlined" onClick={() => submitCard(card, index)}>
+          submit
+        </Button>
       )}
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px;
+  height 130px;
+`;
