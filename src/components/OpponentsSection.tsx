@@ -22,7 +22,7 @@ export const OpponentsSection: React.FC = () => {
                 <OpponentCard key={i} />
               ))}
             </CardContainer>
-            <UserMat shouldShow={player.matStatus} />
+            <UserMat status={player.matStatus} />
           </StyledPlayerContainer>
         ))}
       </PlayersContainer>

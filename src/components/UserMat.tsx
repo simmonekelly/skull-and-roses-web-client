@@ -1,14 +1,14 @@
 import React from "react";
 
 type MatProps = {
-  shouldShow: boolean;
+  status: boolean;
 };
 
-export const UserMat: React.FC<MatProps> = ({ shouldShow }) => {
+export const UserMat: React.FC<MatProps> = ({ status }) => {
   return (
-    <div>
+    <>
       <h1>Mat</h1>
-      {shouldShow ? "one more win away from winning the game" : "skull"}
-    </div>
+      <p>{status ? "one more win away from winning the game" : "skull"}</p>
+    </>
   );
 };
