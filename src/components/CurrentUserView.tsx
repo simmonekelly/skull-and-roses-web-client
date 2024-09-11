@@ -4,33 +4,78 @@ import { Card } from "./Card";
 import { styled } from "styled-components";
 import { MakeGuessInput } from "./MakeGuessInput";
 import { UserMat } from "./UserMat";
+import Divider from "@mui/material/Divider";
 
 export const CurrentUser: React.FC = () => {
   const { currentUser } = useContext(SocketContext);
 
   return (
     <StyledUserSection>
-      <p>Current User: {currentUser.id}</p>
-      <MakeGuessInput />
+      <UserInfo>
+        <p>Current User: {currentUser.id}</p>
+        <MakeGuessInput />
+      </UserInfo>
       <h2>Your Cards:</h2>
-      <CardContainer>
-        {currentUser.cards.map((card, i) => (
-          <Card card={card} index={i} key={i} />
-        ))}
-        <UserMat shouldShow={currentUser.matStatus} />
-      </CardContainer>
+      <TopSection>
+        <LeftSide>
+          <CardContainer>
+            {currentUser.cards.map((card, i) => (
+              <Card card={card} index={i} key={i} />
+            ))}
+          </CardContainer>
+        </LeftSide>
+        <Divider variant="middle" orientation="vertical" flexItem />
+        <RightSide>
+          <UserMat status={currentUser.matStatus} />
+        </RightSide>
+      </TopSection>
+      <Divider variant="middle" flexItem />
     </StyledUserSection>
   );
 };
+
+const StyledUserSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const TopSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const LeftSide = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+`;
+
+const RightSide = styled.div`
+  width: 155px;
+  height: 155px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin-left: 20px;
+`;
 
 const CardContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   flex-wrap: wrap;
-`;
-
-const StyledUserSection = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
