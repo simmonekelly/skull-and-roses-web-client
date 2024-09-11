@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { SocketContext } from "../context/SocketContext";
-import type { NewRoom, User } from "../types/Types";
+import type { User } from "../types/Types";
 import Button from "@mui/material/Button";
 
 type Props = {
@@ -18,7 +18,6 @@ export const NextRoundButton: React.FC<Props> = ({
     socket,
     room: currentRoom,
     currentUser,
-    setRoom,
     setCurrentUser,
   } = useContext(SocketContext);
 
