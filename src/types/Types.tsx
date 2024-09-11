@@ -31,8 +31,11 @@ export interface ServerToClientEvents {
   withAck: (d: string, callback: (e: number) => void) => void;
   new_user_joins: (room: Room) => void;
   update_room: (room: Room) => void;
-  update_countdown: (room: Room, user: string, userGuess: number) => void;
-  show_update_modal: () => void;
+  show_guess_result_modal: (
+    room: Room,
+    userId: string,
+    userGuess: number
+  ) => void;
 }
 
 export interface ClientToServerEvents {
@@ -55,10 +58,15 @@ export interface ClientToServerEvents {
     callback: () => void
   ) => void;
   update_mat_status: (
-    currentRoom: string,
-    user: string,
-    currentUser: string,
+    currentRoomId: string,
+    guessingUserId: string,
+    currentUserId: string,
     updatedMatStatus: boolean,
+    callback: (updatedUser: User) => void
+  ) => void;
+  reset_for_next_round: (
+    currentRoomId: string,
+    currentUserId: string,
     callback: (updatedUser: User) => void
   ) => void;
 }

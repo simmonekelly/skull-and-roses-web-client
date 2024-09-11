@@ -12,7 +12,6 @@ export const CreateRoomButton: React.FC<CreateRoomButtonProps> = () => {
   const createNewRoom = () => {
     console.log("create new room");
     socket?.emit("create_room", (newRoom: NewRoom) => {
-      console.log({ newRoom });
       navigate(`/room/${newRoom.room.roomId}`);
       setRoom(newRoom.room);
       setCurrentUser(newRoom.currentUser);

@@ -18,7 +18,6 @@ export const Card: React.FC<CardProps> = ({ card, index }) => {
   const [selectedCard, setSelectedCard] = useState<boolean>(false);
 
   const submitCard = (card: string, index: number) => {
-    // console.log(`submit card: ${card} at index ${index}`);
     const cardData: SubmittedCardData = { cardText: card, cardIndex: index };
     setSelectedCard(false);
     socket?.emit(
@@ -27,7 +26,6 @@ export const Card: React.FC<CardProps> = ({ card, index }) => {
       currentUser.id,
       cardData,
       (currentUser: User) => {
-        // console.log("emit call back");
         updateUser(currentUser);
       }
     );
