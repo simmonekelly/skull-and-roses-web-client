@@ -9,6 +9,8 @@ import { StockPile } from "../components/StockPile";
 import { CurrentUser } from "../components/CurrentUserView";
 import { OpponentsSection } from "../components/OpponentsSection";
 import { GuessResultModal } from "../components/GuessResultModal";
+import { RoomHeader } from "../components/RoomHeader";
+import { styled } from "styled-components";
 
 export const Room: React.FC = () => {
   const {
@@ -43,10 +45,10 @@ export const Room: React.FC = () => {
   });
 
   //TODO:
-  //styling
   //create new game
   //see why cards are not resetting
   //when a user leaves
+  //how to handle when a user wins the game
 
   const isLoading = currentRoom === undefined || currentUser === undefined;
 
@@ -54,14 +56,17 @@ export const Room: React.FC = () => {
     return <div>Room Loading</div>;
   } else {
     return (
-      <div>
+      <Container>
+        <RoomHeader />
         <GuessResultModal />
-        <h1>Room: {currentRoom.roomId} </h1>
-        <p>Players in Room: {currentRoom.players.length}</p>
         <CurrentUser />
         {currentRoom.stockPile.length > 0 && <StockPile />}
         {currentRoom.players.length > 1 && <OpponentsSection />}
-      </div>
+      </Container>
     );
   }
 };
+
+const Container = styled.div`
+  padding: 30px;
+`;

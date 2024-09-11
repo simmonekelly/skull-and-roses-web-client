@@ -12,7 +12,6 @@ export const CurrentUser: React.FC = () => {
   return (
     <StyledUserSection>
       <UserInfo>
-        <p>Current User: {currentUser.id}</p>
         <MakeGuessInput />
       </UserInfo>
       <h2>Your Cards:</h2>
@@ -48,17 +47,13 @@ const UserInfo = styled.div`
 const TopSection = styled.div`
   display: flex;
   flex-direction: row;
-  width: 60%;
   justify-content: space-evenly;
   align-items: center;
   margin-bottom: 20px;
 `;
 
 const LeftSide = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 500px;
+  margin-right: 10px;
 `;
 
 const RightSide = styled.div`
