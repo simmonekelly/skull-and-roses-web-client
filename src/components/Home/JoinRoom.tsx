@@ -2,6 +2,9 @@ import React, { useContext, useState } from "react";
 import { SocketContext } from "../../context/SocketContext";
 import { useNavigate } from "react-router-dom";
 import type { JoinRoom as JoinRoomType } from "../../types/Types";
+import { Button } from "../UI/Button";
+import styled from "styled-components";
+import { Input } from "../UI/Input";
 
 export const JoinRoom: React.FC = () => {
   const { socket, setRoom, setCurrentUser } = useContext(SocketContext);
@@ -18,12 +21,18 @@ export const JoinRoom: React.FC = () => {
   };
 
   return (
-    <div>
-      <input
-        placeholder="Input Room Name"
-        onChange={(e) => setRoomToJoin(e.target.value)}
-      />
-      <button onClick={joinRoom}>Join Room</button>
-    </div>
+    <Container>
+      <Input placeholderText="Input Room Name" handleOnChange={setRoomToJoin} />
+      <Button onClick={joinRoom} buttonType="outlined">
+        Join Room
+      </Button>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+`;
