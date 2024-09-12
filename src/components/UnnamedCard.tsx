@@ -2,7 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 import LocalPlayRoundedIcon from "@mui/icons-material/LocalPlayRounded";
 
-export const OpponentCard: React.FC = () => {
+export const UnnamedCard: React.FC = () => {
   return (
     <Container>
       <LocalPlayRoundedIcon />
@@ -16,4 +16,5 @@ const Container = styled.div`
   display: flex;
   border: 1px solid black;
   border-radius: 4px;
+  justify-content: center;
 `;

@@ -6,11 +6,12 @@ import type {
   JoinRoom as JoinRoomType,
 } from "../types/Types";
 import { StockPile } from "../components/StockPile";
-import { CurrentUser } from "../components/CurrentUserView";
+import { CurrentUser } from "../components/CurrentUser/CurrentUserView";
 import { OpponentsSection } from "../components/OpponentsSection";
 import { GuessResultModal } from "../components/GuessResultModal";
-import { RoomHeader } from "../components/RoomHeader";
+import { RoomHeader } from "../components/RoomHeader/RoomHeader";
 import { styled } from "styled-components";
+import { Divider } from "@mui/material";
 
 export const Room: React.FC = () => {
   const {
@@ -60,8 +61,10 @@ export const Room: React.FC = () => {
         <RoomHeader />
         <GuessResultModal />
         <CurrentUser />
-        {currentRoom.stockPile.length > 0 && <StockPile />}
-        {currentRoom.players.length > 1 && <OpponentsSection />}
+        <Divider variant="middle" />
+        <StockPile />
+        <Divider variant="middle" />
+        <OpponentsSection />
       </Container>
     );
   }

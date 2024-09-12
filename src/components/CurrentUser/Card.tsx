@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
-import { SocketContext } from "../context/SocketContext";
-import { SubmittedCardData, User } from "../types/Types";
+import { SocketContext } from "../../context/SocketContext";
+import { SubmittedCardData, User } from "../../types/Types";
 import FilterVintageRoundedIcon from "@mui/icons-material/FilterVintageRounded";
 import Button from "@mui/material/Button";
 import { styled } from "styled-components";
-import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 
 type CardProps = {
   card: string;
@@ -41,7 +40,7 @@ export const Card: React.FC<CardProps> = ({ card, index }) => {
         {card === "rose" ? (
           <FilterVintageRoundedIcon />
         ) : (
-          <SmartToyOutlinedIcon />
+          <span className="material-symbols-outlined">skull</span>
         )}
       </h1>
       {selectedCard && (

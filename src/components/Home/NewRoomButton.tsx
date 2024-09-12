@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { SocketContext } from "../context/SocketContext";
-import type { NewRoom } from "../types/Types";
+import { SocketContext } from "../../context/SocketContext";
+import type { NewRoom } from "../../types/Types";
 
 type CreateRoomButtonProps = {};
 
