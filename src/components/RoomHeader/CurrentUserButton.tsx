@@ -9,7 +9,7 @@ import { styled } from "styled-components";
 
 export const CurrentUserButton: React.FC = () => {
   const navigate = useNavigate();
-  const { currentUser } = useContext(SocketContext);
+  const { currentUser, socket, room: currentRoom } = useContext(SocketContext);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -20,8 +20,11 @@ export const CurrentUserButton: React.FC = () => {
     setAnchorEl(null);
   };
 
-  const handleHomeNav = () => {
-    navigate(`/`);
+  const leaveRoom = () => {
+    socket?.emit("leave_room", currentRoom.roomId, currentUser.id, () => {
+      console.log("reset emiited");
+      navigate(`/`);
+    });
   };
 
   return (
@@ -47,8 +50,8 @@ export const CurrentUserButton: React.FC = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>Leave Room</MenuItem>
-        <MenuItem onClick={handleHomeNav}>Home</MenuItem>
+        <MenuItem onClick={leaveRoom}>Leave Room</MenuItem>
+        <MenuItem onClick={leaveRoom}>Home</MenuItem>
       </Menu>
     </div>
   );
