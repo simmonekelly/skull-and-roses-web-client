@@ -48,7 +48,6 @@ export const Room: React.FC = () => {
   //TODO:
   //create new game
   //see why cards are not resetting
-  //when a user leaves
   //how to handle when a user wins the game
 
   const isLoading = currentRoom === undefined || currentUser === undefined;

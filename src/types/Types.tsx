@@ -69,4 +69,9 @@ export interface ClientToServerEvents {
     currentUserId: string,
     callback: (updatedUser: User) => void
   ) => void;
+  leave_room: (
+    currentRoomId: string,
+    currentUserId: string,
+    callback: () => void
+  ) => void;
 }
