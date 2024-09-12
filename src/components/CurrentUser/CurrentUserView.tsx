@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { SocketContext } from "../../context/SocketContext";
-import { Card } from "./Card";
+import { CurrenUserCard } from "./CurrenUserCard";
 import { styled } from "styled-components";
 import { MakeGuessInput } from "../MakeGuessInput";
 import { UserMat } from "../UserMat";
@@ -20,7 +20,7 @@ export const CurrentUser: React.FC = () => {
         <LeftSide>
           <CardContainer>
             {currentUser.cards.map((card, i) => (
-              <Card card={card} index={i} key={i} />
+              <CurrenUserCard card={card} index={i} key={i} />
             ))}
           </CardContainer>
         </LeftSide>

@@ -10,7 +10,7 @@ type MatProps = {
 export const UserMat: React.FC<MatProps> = ({ status }) => {
   return (
     <Container>
-      <H3>Mat</H3>
+      <H3>Score Card</H3>
       {status && <ThumbUpOffAltRoundedIcon />}
     </Container>
   );

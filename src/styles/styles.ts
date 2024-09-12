@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+export const Red = "#b20d30"
+export const Brown = "#a44200"
+export const Blue = "#2274a5"
+
 export const Paragraph = styled.p`
   font-weight: 400;
   font-style: normal;
@@ -9,21 +13,14 @@ export const Paragraph = styled.p`
   line-height: 24px;
 `;
 
-// export const H1 = styled.h1 `
-//   font-family: "Luckiest Guy", cursive;
-//   font-weight: 900;
-//   font-size: 24px;
-//   margin: 0;
-//   padding-bottom: 10px;
-
-//   @media (min-width: ${Breakpoint.tablet}px) {
-//     font-size: 46px;
-//   }
-
-//   @media (min-width: ${Breakpoint.desktop}px) {
-//     font-size: 46px;
-//   }
-// `
+export const H1 = styled.h1 `
+  font-family: "Ewert", serif;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  padding-bottom: 10px;
+  font-size: 80px;
+`
 
 export const H2 = styled.h2`
   font-weight: 700;

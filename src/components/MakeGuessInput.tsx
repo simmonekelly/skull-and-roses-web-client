@@ -1,5 +1,8 @@
 import React, { useContext, useState } from "react";
 import { SocketContext } from "../context/SocketContext";
+import { Input } from "./UI/Input";
+import { Button } from "./UI/Button";
+import styled from "styled-components";
 
 export const MakeGuessInput: React.FC = () => {
   const { socket, currentUser, room: currentRoom } = useContext(SocketContext);
@@ -27,12 +30,16 @@ export const MakeGuessInput: React.FC = () => {
   };
 
   return (
-    <div>
-      <input
-        placeholder="Input Guess"
-        onChange={(e) => setUserGuess(e.target.value)}
-      />
-      <button onClick={() => submitGuess()}>Make Guess</button>
-    </div>
+    <Container>
+      <Input placeholderText="Input Guess" handleOnChange={setUserGuess} />
+      <Button onClick={submitGuess}>Make Guess</Button>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+`;

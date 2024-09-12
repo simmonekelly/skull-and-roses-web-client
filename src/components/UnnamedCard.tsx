@@ -1,20 +1,11 @@
 import React from "react";
-import { styled } from "styled-components";
 import LocalPlayRoundedIcon from "@mui/icons-material/LocalPlayRounded";
+import { Card } from "./UI/Card";
 
 export const UnnamedCard: React.FC = () => {
   return (
-    <Container>
+    <Card>
       <LocalPlayRoundedIcon />
-    </Container>
+    </Card>
   );
 };
-
-const Container = styled.div`
-  padding: 10px;
-  margin: 10px;
-  display: flex;
-  border: 1px solid black;
-  border-radius: 4px;
-  justify-content: center;
-`;
