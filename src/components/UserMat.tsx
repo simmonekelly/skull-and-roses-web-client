@@ -1,6 +1,7 @@
 import React from "react";
 import ThumbUpOffAltRoundedIcon from "@mui/icons-material/ThumbUpOffAltRounded";
 import { styled } from "styled-components";
+import { H3 } from "../styles/styles";
 
 type MatProps = {
   status: boolean;
@@ -9,7 +10,7 @@ type MatProps = {
 export const UserMat: React.FC<MatProps> = ({ status }) => {
   return (
     <Container>
-      <h3>Mat</h3>
+      <H3>Mat</H3>
       {status && <ThumbUpOffAltRoundedIcon />}
     </Container>
   );

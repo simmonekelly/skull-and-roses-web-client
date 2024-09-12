@@ -1,14 +1,15 @@
+import Face6Icon from "@mui/icons-material/Face6";
 import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { SocketContext } from "../context/SocketContext";
-import PersonIcon from "@mui/icons-material/Person";
+import { SocketContext } from "../../context/SocketContext";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { Divider } from "@mui/material";
 
-export const RoomPlayersMenu: React.FC = () => {
-  const { room: currentRoom } = useContext(SocketContext);
+export const CurrentUserButton: React.FC = () => {
+  const navigate = useNavigate();
+  const { currentUser } = useContext(SocketContext);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -19,17 +20,23 @@ export const RoomPlayersMenu: React.FC = () => {
     setAnchorEl(null);
   };
 
+  const handleHomeNav = () => {
+    navigate(`/`);
+  };
+
   return (
     <div>
       <Button
-        variant="outlined"
+        variant="contained"
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Players: {<PersonIcon />} {currentRoom.players.length}
+        <Container>
+          {<Face6Icon />} {currentUser.id}
+        </Container>
       </Button>
       <Menu
         id="basic-menu"
@@ -40,24 +47,16 @@ export const RoomPlayersMenu: React.FC = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem>
-          <UsersInRoom>
-            Users in Room:
-            <ul>
-              {currentRoom.players.map((player) => (
-                <li>{player.id}</li>
-              ))}
-            </ul>
-          </UsersInRoom>
-        </MenuItem>
-        <Divider variant="middle" />
-        <MenuItem onClick={handleClose}>Invite Users</MenuItem>
+        <MenuItem onClick={handleClose}>Leave Room</MenuItem>
+        <MenuItem onClick={handleHomeNav}>Home</MenuItem>
       </Menu>
     </div>
   );
 };
 
-const UsersInRoom = styled.div`
+const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  width: 230px;
+  flex-direction: row;
+  justify-content: space-around;
 `;

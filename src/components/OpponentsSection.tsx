@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { SocketContext } from "../context/SocketContext";
-import { OpponentCard } from "./OpponentCard";
+import { UnnamedCard } from "./UnnamedCard";
 import { styled } from "styled-components";
 import { UserMat } from "./UserMat";
+import { H2, H3 } from "../styles/styles";
 
 export const OpponentsSection: React.FC = () => {
   const { currentUser, room: currentRoom } = useContext(SocketContext);
@@ -12,22 +13,24 @@ export const OpponentsSection: React.FC = () => {
 
   return (
     <StyledContainer>
-      <h2>Other Players:</h2>
-      <PlayersContainer>
-        {filteredPlayers.map((player, i) => (
-          <StyledPlayerContainer>
-            <h3 key={i}>{player.id}</h3>
-            <CardContainer>
-              {player.cards.map((card, i) => (
-                <OpponentCard key={i} />
-              ))}
-              <MatContainer>
-                <UserMat status={player.matStatus} />
-              </MatContainer>
-            </CardContainer>
-          </StyledPlayerContainer>
-        ))}
-      </PlayersContainer>
+      <H2>Other Players:</H2>
+      {currentRoom.players.length > 1 && (
+        <PlayersContainer>
+          {filteredPlayers.map((player, i) => (
+            <StyledPlayerContainer>
+              <H3 key={i}>{player.id}</H3>
+              <CardContainer>
+                {player.cards.map((card, i) => (
+                  <UnnamedCard key={i} />
+                ))}
+                <MatContainer>
+                  <UserMat status={player.matStatus} />
+                </MatContainer>
+              </CardContainer>
+            </StyledPlayerContainer>
+          ))}
+        </PlayersContainer>
+      )}
     </StyledContainer>
   );
 };

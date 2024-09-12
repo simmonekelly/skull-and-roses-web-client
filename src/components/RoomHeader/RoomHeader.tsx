@@ -1,5 +1,5 @@
 import React from "react";
-import { RoomPlayersMenu } from "./RoomPlayersMenu";
+import { PlayersMenu } from "./PlayersMenu";
 import { styled } from "styled-components";
 import { RulesButton } from "./RulesButton";
 import { CurrentUserButton } from "./CurrentUserButton";
@@ -7,7 +7,7 @@ import { CurrentUserButton } from "./CurrentUserButton";
 export const RoomHeader: React.FC = () => {
   return (
     <Container>
-      <RoomPlayersMenu />
+      <PlayersMenu />
       <RightSideContainer>
         <RulesButton />
         <CurrentUserButton />
@@ -28,5 +28,5 @@ const RightSideContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 30%;
+  width: 35%;
 `;

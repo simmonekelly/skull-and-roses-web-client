@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { SocketContext } from "../context/SocketContext";
+import { SocketContext } from "../../context/SocketContext";
 import { useNavigate } from "react-router-dom";
-import type { JoinRoom as JoinRoomType } from "../types/Types";
+import type { JoinRoom as JoinRoomType } from "../../types/Types";
 
 export const JoinRoom: React.FC = () => {
   const { socket, setRoom, setCurrentUser } = useContext(SocketContext);

@@ -1,6 +1,8 @@
 import React from "react";
 import SkullHero from "../images/SkullHero.jpg";
-import { CreateRoomButton, Header, JoinRoom } from "../components";
+import { Header } from "../components/Home/Header";
+import { CreateRoomButton } from "../components/Home/NewRoomButton";
+import { JoinRoom } from "../components/Home/JoinRoom";
 
 export const Home: React.FC = () => {
   return (

@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
-import { SocketContext } from "../context/SocketContext";
+import { SocketContext } from "../../context/SocketContext";
 import { Card } from "./Card";
 import { styled } from "styled-components";
-import { MakeGuessInput } from "./MakeGuessInput";
-import { UserMat } from "./UserMat";
+import { MakeGuessInput } from "../MakeGuessInput";
+import { UserMat } from "../UserMat";
 import Divider from "@mui/material/Divider";
+import { H2 } from "../../styles/styles";
 
 export const CurrentUser: React.FC = () => {
   const { currentUser } = useContext(SocketContext);
@@ -14,7 +15,7 @@ export const CurrentUser: React.FC = () => {
       <UserInfo>
         <MakeGuessInput />
       </UserInfo>
-      <h2>Your Cards:</h2>
+      <H2>Your Cards:</H2>
       <TopSection>
         <LeftSide>
           <CardContainer>
@@ -28,7 +29,6 @@ export const CurrentUser: React.FC = () => {
           <UserMat status={currentUser.matStatus} />
         </RightSide>
       </TopSection>
-      <Divider variant="middle" flexItem />
     </StyledUserSection>
   );
 };
