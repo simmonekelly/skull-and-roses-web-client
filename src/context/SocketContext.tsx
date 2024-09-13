@@ -41,7 +41,6 @@ export const SocketContextProvider: React.FC<React.PropsWithChildren> = ({
   useEffect(() => {
     if (!socket) {
       const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-        // "http://localhost:8080"
         "https://skull-and-roses-game-server.onrender.com/"
       );
       setSocket(socket);
