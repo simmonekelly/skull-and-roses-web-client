@@ -39,11 +39,14 @@ export const SocketContextProvider: React.FC<React.PropsWithChildren> = ({
   const [otherUsers, setOtherUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-      "http://localhost:8080"
-    );
-    setSocket(socket);
-  }, []);
+    if (!socket) {
+      const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
+        // "http://localhost:8080"
+        "https://skull-and-roses-game-server.onrender.com/"
+      );
+      setSocket(socket);
+    }
+  }, [socket]);
   //console.log({ socket, room });
 
   return (
