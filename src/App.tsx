@@ -9,7 +9,7 @@ function App() {
       <BrowserRouter>
         <SocketContextProvider>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/skull-and-roses-web-client" element={<Home />} />
             <Route path="/room/:id" element={<Room />} />
           </Routes>
         </SocketContextProvider>
