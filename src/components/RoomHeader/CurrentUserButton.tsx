@@ -23,7 +23,7 @@ export const CurrentUserButton: React.FC = () => {
   const leaveRoom = () => {
     socket?.emit("leave_room", currentRoom.roomId, currentUser.id, () => {
       console.log("reset emiited");
-      navigate(`/`);
+      navigate(`/skull-and-roses-web-client`);
     });
   };
 
