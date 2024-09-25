@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/skull-and-roses-web-client/static/css/main.a2abbebb.css",
-    "main.js": "/skull-and-roses-web-client/static/js/main.e865bcc7.js",
+    "main.js": "/skull-and-roses-web-client/static/js/main.5f77ce55.js",
     "static/js/787.c4e7f8f9.chunk.js": "/skull-and-roses-web-client/static/js/787.c4e7f8f9.chunk.js",
     "static/media/Skull_and_Crossbones.svg": "/skull-and-roses-web-client/static/media/Skull_and_Crossbones.67674028aab76be62890e0d3dc0cf2da.svg",
     "static/media/Rose_flower.svg": "/skull-and-roses-web-client/static/media/Rose_flower.cd1fe9e2ba8c6e5140e73f2344d0d985.svg",
     "index.html": "/skull-and-roses-web-client/index.html",
     "main.a2abbebb.css.map": "/skull-and-roses-web-client/static/css/main.a2abbebb.css.map",
-    "main.e865bcc7.js.map": "/skull-and-roses-web-client/static/js/main.e865bcc7.js.map",
+    "main.5f77ce55.js.map": "/skull-and-roses-web-client/static/js/main.5f77ce55.js.map",
     "787.c4e7f8f9.chunk.js.map": "/skull-and-roses-web-client/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a2abbebb.css",
-    "static/js/main.e865bcc7.js"
+    "static/js/main.5f77ce55.js"
   ]
 }
