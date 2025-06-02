@@ -46,10 +46,10 @@ export const RulesButton: React.FC = () => {
             ref={descriptionElementRef}
             tabIndex={-1}
           >
-            `Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
             dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
             ac consectetur ac, vestibulum at eros. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et.`
+            magna, vel scelerisque nisl consectetur et.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

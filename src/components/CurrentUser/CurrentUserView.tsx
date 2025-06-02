@@ -1,14 +1,18 @@
-import React, { useContext } from "react";
-import { SocketContext } from "../../context/SocketContext";
+import React from "react";
 import { CurrenUserCard } from "./CurrenUserCard";
 import { styled } from "styled-components";
 import { MakeGuessInput } from "../MakeGuessInput";
 import { UserMat } from "../UserMat";
 import Divider from "@mui/material/Divider";
 import { H2 } from "../../styles/styles";
+import { Room } from "../../types/firebaseTypes";
 
-export const CurrentUser: React.FC = () => {
-  const { currentUser } = useContext(SocketContext);
+export const CurrentUser: React.FC<{ currentRoom: Room }> = ({
+  currentRoom,
+}) => {
+  const currentUser = currentRoom.players.filter(
+    (player) => player.id === sessionStorage.getItem("currentUserNameId")
+  )[0];
 
   return (
     <StyledUserSection>

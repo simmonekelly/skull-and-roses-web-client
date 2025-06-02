@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
-import { SocketContext } from "../context/SocketContext";
+import React from "react";
 import { UnnamedCard } from "./UnnamedCard";
 import { styled } from "styled-components";
 import { UserMat } from "./UserMat";
 import { H2, H3 } from "../styles/styles";
+import type { Room } from "../types/firebaseTypes";
 
-export const OpponentsSection: React.FC = () => {
-  const { currentUser, room: currentRoom } = useContext(SocketContext);
+export const OpponentsSection: React.FC<{ currentRoom: Room }> = ({
+  currentRoom,
+}) => {
   const filteredPlayers = currentRoom.players.filter(
-    (player) => player.id !== currentUser.id
+    (player) => player.id !== sessionStorage.getItem("currentUserNameId")
   );
 
   return (
@@ -18,7 +19,7 @@ export const OpponentsSection: React.FC = () => {
         <PlayersContainer>
           {filteredPlayers.map((player, i) => (
             <StyledPlayerContainer>
-              <H3 key={i}>{player.id}</H3>
+              <H3 key={i}>{player.username}</H3>
               <CardContainer>
                 {player.cards.map((card, i) => (
                   <UnnamedCard key={i} />

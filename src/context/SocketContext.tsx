@@ -38,14 +38,14 @@ export const SocketContextProvider: React.FC<React.PropsWithChildren> = ({
   );
   const [otherUsers, setOtherUsers] = useState<User[]>([]);
 
-  useEffect(() => {
-    if (!socket) {
-      const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-        "https://skull-and-roses-game-server.onrender.com/"
-      );
-      setSocket(socket);
-    }
-  }, [socket]);
+  // useEffect(() => {
+  //   if (!socket) {
+  //     const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
+  //       "https://skull-and-roses-game-server.onrender.com/"
+  //     );
+  //     setSocket(socket);
+  //   }
+  // }, [socket]);
   //console.log({ socket, room });
 
   return (

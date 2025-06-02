@@ -5,23 +5,22 @@ import type { JoinRoom as JoinRoomType } from "../../types/Types";
 import { Button } from "../UI/Button";
 import styled from "styled-components";
 import { Input } from "../UI/Input";
+import { createUser } from "../../utils/createAUser";
 
 export const JoinRoom: React.FC = () => {
-  const { socket, setRoom, setCurrentUser } = useContext(SocketContext);
   const navigate = useNavigate();
   const [roomToJoin, setRoomToJoin] = useState<string>();
+  const [username, setUsername] = useState<string>("");
 
   const joinRoom = () => {
+    const currentUser = createUser(username, false);
+
     console.log("join room input");
-    socket?.emit("join_room", roomToJoin, (joinRoom: JoinRoomType) => {
-      navigate(`/room/${joinRoom.room.roomId}`);
-      setRoom(joinRoom.room);
-      setCurrentUser(joinRoom.currentUser);
-    });
   };
 
   return (
     <Container>
+      <Input placeholderText="Input Username" handleOnChange={setUsername} />
       <Input placeholderText="Input Room Name" handleOnChange={setRoomToJoin} />
       <Button onClick={joinRoom} buttonType="outlined">
         Join Room

@@ -1,36 +1,32 @@
-import React, { useContext } from "react";
-import { SocketContext } from "../context/SocketContext";
+import React from "react";
 import { UnnamedCard } from "./UnnamedCard";
 import { styled } from "styled-components";
 import Grid from "@mui/material/Grid2";
 import { H2, Paragraph } from "../styles/styles";
+import type { Room } from "../types/firebaseTypes";
 
-export const StockPile: React.FC = () => {
-  const { room: currentRoom } = useContext(SocketContext);
-
+export const StockPile: React.FC<Room> = ({ stockPile }) => {
   return (
     <SectionContainer>
       <H2>StockPile:</H2>
-      <Paragraph>Number of Cards: {currentRoom.stockPile.length}</Paragraph>
-      {currentRoom.stockPile.length > 0 && (
-        <StockPileContainer>
+      <Paragraph>
+        Number of Cards:
+        {stockPile?.length || 0}
+      </Paragraph>
+      {stockPile?.length !== undefined && stockPile?.length > 0 && (
+        <div>
           <Grid container spacing={2} justifyContent={"center"}>
-            {currentRoom.stockPile.map((card) => (
+            {stockPile?.map((card: any) => (
               <Grid size={2}>
                 <UnnamedCard />
               </Grid>
             ))}
           </Grid>
-        </StockPileContainer>
+        </div>
       )}
     </SectionContainer>
   );
 };
-
-const StockPileContainer = styled.div`
-  // display: flex;
-  // justify-content: center;
-`;
 
 const SectionContainer = styled.div`
   width: 60%;
