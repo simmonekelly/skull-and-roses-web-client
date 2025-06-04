@@ -59,6 +59,7 @@ export const DatabaseContextProvider: React.FC<React.PropsWithChildren> = ({
 
     // Clean up the listener when the component unmounts
     return () => unsubscribe();
+    // eslint-disable-next-line
   }, []); // Empty dependency array means this runs once on mount
 
   const addUserToRoom = async (
