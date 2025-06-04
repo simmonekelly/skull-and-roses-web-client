@@ -4,7 +4,7 @@ import Rose from "../images/Rose_flower.svg";
 import { Header } from "../components/Home/Header";
 import { JoinRoom } from "../components/Home/JoinRoom";
 import styled from "styled-components";
-import { CreateRoomButton as FirebaseCreateRoomButton } from "../components/Home/FireBaseNewRoomButton";
+import { CreateRoomButton } from "../components/Home/CreateNewRoomButton";
 
 export const Home: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ export const Home: React.FC = () => {
           <img alt="home-page-hero" src={SkullHero} />
         </ImageContainer>
         <ButtonsContainer>
-          <FirebaseCreateRoomButton />
+          <CreateRoomButton />
           <JoinRoom />
         </ButtonsContainer>
         <ImageContainer>
