@@ -21,15 +21,6 @@ export const GuessResultModal: React.FC<Props> = () => {
   const handleClose = () => setOpen(false);
   const [message, setMessage] = useState<string>("");
 
-  socket?.on(
-    "show_guess_result_modal",
-    (room: Room, userId: string, userGuess: number) => {
-      setCurrentGuess(userGuess);
-      setGuessingUserId(userId);
-      handleOpen();
-    }
-  );
-
   let currentGuessResult = useRef({});
 
   useEffect(() => {

@@ -3,27 +3,25 @@ import { SocketContext } from "../context/SocketContext";
 import { Input } from "./UI/Input";
 import { Button } from "./UI/Button";
 import styled from "styled-components";
+import { CurrentRoom } from "../types/firebaseTypes";
 
-export const MakeGuessInput: React.FC = () => {
-  const { socket, currentUser, room: currentRoom } = useContext(SocketContext);
+export const MakeGuessInput: React.FC<CurrentRoom> = ({ roomData }) => {
+  const stockPileLength = roomData.stockPile
+    ? Object.keys(roomData.stockPile).length
+    : 0;
   const [userGuess, setUserGuess] = useState<string>();
 
   const submitGuess = () => {
-    if (userGuess && +userGuess > currentRoom.stockPile.length) {
+    if (userGuess && +userGuess > stockPileLength) {
       console.log(
         "Your guess is higher than the number of cards in the stock pile. Please guess again"
       );
     } else if (userGuess) {
       const guessAsNumber = +userGuess;
-      socket?.emit(
-        "submit_guess",
-        currentRoom.roomId,
-        currentUser.id,
-        guessAsNumber,
-        () => {
-          console.log("guess emitted");
-        }
-      );
+      console.log("guess:", guessAsNumber);
+      //what happens when you guess correctly
+      //what happens when you guess incorrectly
+      //udate database to show correct or incorrect guess
     } else {
       console.log("please input a guess");
     }

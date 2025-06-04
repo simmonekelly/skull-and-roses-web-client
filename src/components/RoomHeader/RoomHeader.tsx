@@ -3,21 +3,13 @@ import { PlayersMenu } from "./PlayersMenu";
 import { styled } from "styled-components";
 import { RulesButton } from "./RulesButton";
 import { CurrentUserButton } from "./CurrentUserButton";
-import { Room } from "../../types/firebaseTypes";
-import { DatabaseReference } from "firebase/database";
+import { CurrentRoom } from "../../types/firebaseTypes";
 
-type Props = {
-  currentRoomRef: DatabaseReference;
-  roomData: Room;
-};
-
-export const RoomHeader: React.FC<Props> = ({ currentRoomRef, roomData }) => {
-  let storageData = sessionStorage.getItem("currentUserNameId");
-
-  const currentUser = roomData.players.find(
-    (player) => player.id === storageData
-  );
-
+export const RoomHeader: React.FC<CurrentRoom> = ({
+  currentRoomRef,
+  roomData,
+  currentUser,
+}) => {
   return (
     <Container>
       <PlayersMenu players={roomData.players} />

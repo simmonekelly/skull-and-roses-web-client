@@ -5,26 +5,34 @@ import { MakeGuessInput } from "../MakeGuessInput";
 import { UserMat } from "../UserMat";
 import Divider from "@mui/material/Divider";
 import { H2 } from "../../styles/styles";
-import { Room } from "../../types/firebaseTypes";
+import { CurrentRoom } from "../../types/firebaseTypes";
 
-export const CurrentUser: React.FC<{ currentRoom: Room }> = ({
-  currentRoom,
+export const CurrentUser: React.FC<CurrentRoom> = ({
+  roomData,
+  currentRoomRef,
+  currentUser,
 }) => {
-  const currentUser = currentRoom.players.filter(
-    (player) => player.id === sessionStorage.getItem("currentUserNameId")
-  )[0];
-
   return (
     <StyledUserSection>
       <UserInfo>
-        <MakeGuessInput />
+        <MakeGuessInput
+          roomData={roomData}
+          currentRoomRef={currentRoomRef}
+          currentUser={currentUser}
+        />
       </UserInfo>
       <H2>Your Cards:</H2>
       <TopSection>
         <LeftSide>
           <CardContainer>
-            {currentUser.cards.map((card, i) => (
-              <CurrenUserCard card={card} index={i} key={i} />
+            {Object.entries(currentUser.cards).map(([index, card]) => (
+              <CurrenUserCard
+                card={card}
+                key={index}
+                currentUser={currentUser}
+                currentRoomRef={currentRoomRef}
+                roomData={roomData}
+              />
             ))}
           </CardContainer>
         </LeftSide>

@@ -12,6 +12,7 @@ import { ref, update } from "firebase/database"; // <-- Import RTDB methods
 import { Input } from "../UI/Input";
 import { createUser } from "../../utils/createAUser";
 import styled from "styled-components";
+import { Room } from "../../types/firebaseTypes";
 
 type CreateRoomButtonProps = {};
 
@@ -32,11 +33,11 @@ export const CreateRoomButton: React.FC<CreateRoomButtonProps> = () => {
       separator: "-",
     });
 
-    const newRoom = {
+    const newRoom: Room = {
       name: roomName,
       createdAt: new Date(),
-      players: [currentUser],
-      stockPile: [],
+      players: { [currentUser.id]: currentUser },
+      stockPile: null,
     };
 
     try {

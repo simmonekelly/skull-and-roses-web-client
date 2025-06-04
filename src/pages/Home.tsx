@@ -16,7 +16,7 @@ export const Home: React.FC = () => {
         </ImageContainer>
         <ButtonsContainer>
           <FirebaseCreateRoomButton />
-          {/* <JoinRoom /> */}
+          <JoinRoom />
         </ButtonsContainer>
         <ImageContainer>
           <img alt="home-page-hero" src={Rose} />

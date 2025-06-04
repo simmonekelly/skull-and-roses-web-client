@@ -44,29 +44,51 @@ export const Room: React.FC = () => {
   if (isLoading) {
     return <div>Room Loading</div>;
   } else {
+    const currentUserId = sessionStorage.getItem("currentUserNameId");
     const isCurrentUserInRoom = Boolean(
-      roomData.players.find((player) => player.id === storageData)
+      currentUserId !== null && roomData.players[currentUserId]
     );
 
     console.log({ isCurrentUserInRoom });
 
-    return (
-      <Container>
-        <CreateUserModal
-          isOpen={!isCurrentUserInRoom}
-          currentRoomRef={currentRoomRef}
-          roomData={roomData}
-        />
-        <H3>Room: {roomData.name}</H3>
-        <RoomHeader currentRoomRef={currentRoomRef} roomData={roomData} />
-        {/* <GuessResultModal /> */}
-        <CurrentUser currentRoom={roomData} />
-        <Divider variant="middle" />
-        <StockPile {...roomData} />
-        <Divider variant="middle" />
-        <OpponentsSection currentRoom={roomData} />
-      </Container>
-    );
+    if (!isCurrentUserInRoom || currentUserId === null) {
+      return (
+        <Container>
+          <CreateUserModal
+            isOpen={!isCurrentUserInRoom}
+            currentRoomRef={currentRoomRef}
+            roomData={roomData}
+          />
+        </Container>
+      );
+    } else {
+      const currentUser = roomData.players[currentUserId];
+
+      return (
+        <Container>
+          <H3>Room: {roomData.name}</H3>
+          <RoomHeader
+            currentRoomRef={currentRoomRef}
+            roomData={roomData}
+            currentUser={currentUser}
+          />
+          {/* <GuessResultModal /> */}
+          <CurrentUser
+            roomData={roomData}
+            currentRoomRef={currentRoomRef}
+            currentUser={currentUser}
+          />
+          <Divider variant="middle" />
+          <StockPile {...roomData} />
+          <Divider variant="middle" />
+          <OpponentsSection
+            roomData={roomData}
+            currentRoomRef={currentRoomRef}
+            currentUser={currentUser}
+          />
+        </Container>
+      );
+    }
   }
 };
 

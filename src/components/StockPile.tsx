@@ -6,17 +6,19 @@ import { H2, Paragraph } from "../styles/styles";
 import type { Room } from "../types/firebaseTypes";
 
 export const StockPile: React.FC<Room> = ({ stockPile }) => {
+  const isStockPileEmpty = stockPile === null || stockPile === undefined;
+
   return (
     <SectionContainer>
       <H2>StockPile:</H2>
       <Paragraph>
         Number of Cards:
-        {stockPile?.length || 0}
+        {isStockPileEmpty ? 0 : Object.keys(stockPile).length}
       </Paragraph>
-      {stockPile?.length !== undefined && stockPile?.length > 0 && (
+      {!isStockPileEmpty && Object.keys(stockPile).length > 0 && (
         <div>
           <Grid container spacing={2} justifyContent={"center"}>
-            {stockPile?.map((card: any) => (
+            {Object.entries(stockPile).map(([index, card]) => (
               <Grid size={2}>
                 <UnnamedCard />
               </Grid>

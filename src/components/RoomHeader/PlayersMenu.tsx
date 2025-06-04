@@ -31,7 +31,7 @@ export const PlayersMenu: React.FC<Props> = ({ players }) => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Players: {<PersonIcon />} {players.length}
+        Players: {<PersonIcon />} {Object.keys(players).length}
       </Button>
       <Menu
         id="basic-menu"
@@ -46,8 +46,8 @@ export const PlayersMenu: React.FC<Props> = ({ players }) => {
           <UsersInRoom>
             Users in Room:
             <ul>
-              {players.map((player) => (
-                <li>{player.username}</li>
+              {Object.entries(players).map(([id, player]) => (
+                <li key={id}>{player.username}</li>
               ))}
             </ul>
           </UsersInRoom>

@@ -1,6 +1,4 @@
 import React, { useContext } from "react";
-import { SocketContext } from "../../context/SocketContext";
-import { User } from "../../types/Types";
 import {
   Dialog,
   DialogActions,
@@ -8,8 +6,8 @@ import {
   DialogContentText,
 } from "@mui/material";
 import { SubmitCardButton } from "./SubmitCardButton";
-import { SubmittedCardData } from "../../types/Types";
 import { CardProps } from "./CurrenUserCard";
+import { DatabaseContext } from "../../context/DatabaseContext";
 
 type Props = CardProps & {
   open: boolean;
@@ -20,27 +18,15 @@ export const SubmitCardModal: React.FC<Props> = ({
   open,
   handleClose,
   card,
-  index,
+  currentUser,
+  currentRoomRef,
+  roomData,
 }) => {
-  const {
-    socket,
-    setCurrentUser: updateUser,
-    currentUser,
-    room: currentRoom,
-  } = useContext(SocketContext);
+  const { submitCard } = useContext(DatabaseContext);
 
   const handleSubmit = () => {
-    const cardData: SubmittedCardData = { cardText: card, cardIndex: index };
     handleClose();
-    socket?.emit(
-      "submit_card",
-      currentRoom.roomId,
-      currentUser.id,
-      cardData,
-      (currentUser: User) => {
-        updateUser(currentUser);
-      }
-    );
+    submitCard(currentUser, currentRoomRef, roomData, card);
   };
 
   return (
@@ -48,7 +34,7 @@ export const SubmitCardModal: React.FC<Props> = ({
       <Dialog open={open} disableEscapeKeyDown={true} onClick={handleClose}>
         <DialogContent>
           <DialogContentText>
-            Do you want to submit the {card} card?
+            Do you want to submit the {card.type} card?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
