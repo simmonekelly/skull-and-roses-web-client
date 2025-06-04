@@ -37,9 +37,11 @@ export const CreateUserModal: React.FC<Props> = ({
     <Modal
       open={isOpen}
       handleClose={onClose}
+      disableEscapeKeyDown={true}
       title="Please enter a username"
       content={content}
       buttonText="Create User"
+      onSubmit={onClose}
     />
   );
 };
