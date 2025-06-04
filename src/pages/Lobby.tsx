@@ -41,16 +41,19 @@ export const Lobby: React.FC<Props> = ({
           <li key={key}>{value.username}</li>
         ))}
       </ul>
-      {isMainUser && canUserStartGame && (
-        <Button
-          onClick={() => {
-            updateGameStatus(true, currentRoomRef);
-          }}
-          buttonType="solid"
-        >
-          Start Game
-        </Button>
-      )}
+      {isMainUser &&
+        (canUserStartGame ? (
+          <Button
+            onClick={() => {
+              updateGameStatus(true, currentRoomRef);
+            }}
+            buttonType="solid"
+          >
+            Start Game
+          </Button>
+        ) : (
+          <Paragraph>Waiting for other players to join...</Paragraph>
+        ))}
     </Container>
   );
 };

@@ -5,6 +5,7 @@ import { Header } from "../components/Home/Header";
 import { JoinRoom } from "../components/Home/JoinRoom";
 import styled from "styled-components";
 import { CreateRoomButton } from "../components/Home/CreateNewRoomButton";
+import { Paragraph } from "../styles/styles";
 
 export const Home: React.FC = () => {
   return (
@@ -15,7 +16,11 @@ export const Home: React.FC = () => {
           <img alt="home-page-hero" src={SkullHero} />
         </ImageContainer>
         <ButtonsContainer>
+          <Paragraph>Input a username to create a new room</Paragraph>
           <CreateRoomButton />
+          <Paragraph>
+            Already have a room? Input the room name to join an existing room
+          </Paragraph>
           <JoinRoom />
         </ButtonsContainer>
         <ImageContainer>
