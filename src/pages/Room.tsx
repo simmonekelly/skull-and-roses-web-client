@@ -4,9 +4,9 @@ import { styled } from "styled-components";
 import { DatabaseContext } from "../context/DatabaseContext";
 import { ref, onValue } from "firebase/database";
 import type { Room as RoomType } from "../types/firebaseTypes";
-import { Loading } from "./Loading";
 import { Lobby } from "./Lobby";
 import { GameBoard } from "./GameBoard";
+import { RoomDoesNotExist } from "./RoomDoesNotExist";
 
 export const Room: React.FC = () => {
   const { database } = useContext(DatabaseContext);
@@ -35,7 +35,7 @@ export const Room: React.FC = () => {
   if (isLoading) {
     return (
       <Container>
-        <Loading />
+        <RoomDoesNotExist />
       </Container>
     );
   } else if (!roomData.hasGameStarted) {
