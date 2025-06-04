@@ -8,6 +8,7 @@ import {
   get,
 } from "firebase/database"; // <-- Import RTDB methods
 import { Card, Room, User } from "../types/firebaseTypes";
+import { createCards } from "../utils/createAUser";
 
 type DatabaseContextValue = {
   database: any;
@@ -31,6 +32,7 @@ type DatabaseContextValue = {
     status: boolean,
     currentRoomRef: DatabaseReference
   ) => Promise<void>;
+  resetGame: (currentRoomRef: DatabaseReference) => Promise<void>;
 };
 
 export const DatabaseContext = createContext<DatabaseContextValue>(
@@ -153,6 +155,39 @@ export const DatabaseContextProvider: React.FC<React.PropsWithChildren> = ({
     }
   };
 
+  const resetGame = async (currentRoomRef: DatabaseReference) => {
+    const roomData = (await get(currentRoomRef).then((snapshot) =>
+      snapshot.val()
+    )) as Room;
+
+    const updatedPlayers = Object.values(roomData.players).map(
+      (player: User) => {
+        player.activeTurn = false;
+        player.cards = createCards();
+        delete player.guessedCorrectly;
+        return player;
+      }
+    );
+
+    const firstPlayer = updatedPlayers[0];
+    firstPlayer.activeTurn = true;
+
+    try {
+      await update(currentRoomRef, {
+        ...roomData,
+        players: {
+          ...roomData.players,
+          [firstPlayer.id]: firstPlayer,
+        },
+        hasGameStarted: false,
+        stockPile: null,
+      });
+      console.log("game reset");
+    } catch (error) {
+      console.error("Error resetting game: ", error);
+    }
+  };
+
   return (
     <DatabaseContext.Provider
       value={{
@@ -161,6 +196,7 @@ export const DatabaseContextProvider: React.FC<React.PropsWithChildren> = ({
         removeUserFromRoom,
         submitCard,
         updateGameStatus,
+        resetGame,
       }}
     >
       {children}

@@ -7,6 +7,7 @@ export type User = {
   gameControler: boolean;
   username: string;
   activeTurn: boolean;
+  guessedCorrectly?: boolean;
 };
 
 export enum CardType {

@@ -11,12 +11,7 @@ import { GameBoard } from "./GameBoard";
 export const Room: React.FC = () => {
   const { database } = useContext(DatabaseContext);
   const [roomData, setRoomData] = useState<RoomType>();
-  let storageData = sessionStorage.getItem("currentUserNameId");
-
   const params = useParams();
-
-  console.log({ params, database, roomData, storageData });
-
   const currentRoomRef = ref(database, `/rooms/${params.id}`);
 
   useEffect(() => {
@@ -30,13 +25,7 @@ export const Room: React.FC = () => {
     return () => unsubscribe();
   }, []); // Empty dependency array means this runs once on mount
 
-  //TODO:
-  //create new game
-  //see why cards are not resetting
-
   const isLoading = roomData === null || roomData === undefined;
-  console.log({ isLoading });
-
   const currentUserId = sessionStorage.getItem("currentUserNameId");
   const isCurrentUserInRoom = Boolean(
     currentUserId !== null && roomData?.players[currentUserId]
@@ -49,7 +38,6 @@ export const Room: React.FC = () => {
       </Container>
     );
   } else if (!roomData.hasGameStarted) {
-    console.log({ isCurrentUserInRoom });
     return (
       <Container>
         <Lobby

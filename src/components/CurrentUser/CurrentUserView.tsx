@@ -6,7 +6,6 @@ import { UserMat } from "../UserMat";
 import Divider from "@mui/material/Divider";
 import { H2 } from "../../styles/styles";
 import { CurrentRoom } from "../../types/firebaseTypes";
-import { OtherUsersTurnModal } from "./OtherUsersTurnModal";
 
 export const CurrentUser: React.FC<CurrentRoom> = ({
   roomData,
@@ -15,7 +14,6 @@ export const CurrentUser: React.FC<CurrentRoom> = ({
 }) => {
   return (
     <StyledUserSection>
-      <OtherUsersTurnModal open={!currentUser.activeTurn} />
       <UserInfo>
         <MakeGuessInput
           roomData={roomData}

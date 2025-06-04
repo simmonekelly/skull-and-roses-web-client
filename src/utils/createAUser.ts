@@ -15,7 +15,7 @@ export const createUser = (username: string, controller: boolean) => {
  return currentUser
 }
 
-const createCards = (): Cards => {
+export const createCards = (): Cards => {
  const cards = {
   [uuidv4()]: {type: CardType.Rose, id: ''},
   [uuidv4()]: {type: CardType.Rose, id: ''},
