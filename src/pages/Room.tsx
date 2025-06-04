@@ -23,6 +23,7 @@ export const Room: React.FC = () => {
 
     // Clean up the listener when the component unmounts
     return () => unsubscribe();
+    // eslint-disable-next-line
   }, []); // Empty dependency array means this runs once on mount
 
   const isLoading = roomData === null || roomData === undefined;

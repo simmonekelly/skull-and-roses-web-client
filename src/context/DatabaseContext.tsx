@@ -42,6 +42,7 @@ export const DatabaseContext = createContext<DatabaseContextValue>(
 export const DatabaseContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
+  // eslint-disable-next-line
   const [data, setData] = useState(null);
   //^^ to view current data
   //vv to create data reference to update
