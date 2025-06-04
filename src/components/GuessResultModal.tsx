@@ -1,91 +1,69 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { SocketContext } from "../context/SocketContext";
-import { Room, User } from "../types/Types";
-import { NextRoundButton } from "./NextRoundButton";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-} from "@mui/material";
+import React, { useContext } from "react";
+import { Room, User } from "../types/firebaseTypes";
+import { Modal } from "./Modal";
+import { DatabaseReference } from "firebase/database";
+import { Paragraph } from "../styles/styles";
+import { DatabaseContext } from "../context/DatabaseContext";
 
-type Props = {};
+type Props = {
+  currentUser: User;
+  currentRoomRef: DatabaseReference;
+  roomData: Room;
+  isThereAGuess: boolean;
+};
 
-export const GuessResultModal: React.FC<Props> = () => {
-  const { socket, currentUser, room: currentRoom } = useContext(SocketContext);
-  const [currentGuess, setCurrentGuess] = useState<number>(0);
-  const [guessingUserId, setGuessingUserId] = useState<string>("");
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [message, setMessage] = useState<string>("");
-
-  socket?.on(
-    "show_guess_result_modal",
-    (room: Room, userId: string, userGuess: number) => {
-      setCurrentGuess(userGuess);
-      setGuessingUserId(userId);
-      handleOpen();
-    }
+export const GuessResultModal: React.FC<Props> = ({
+  currentUser,
+  currentRoomRef,
+  roomData,
+  isThereAGuess,
+}) => {
+  const { resetGame } = useContext(DatabaseContext);
+  const isGameMaster = Boolean(
+    currentUser.gameControler && roomData.players[currentUser.id]
+  );
+  const userWhoGuessed = Object.values(roomData.players).find(
+    (player) => player.guessedCorrectly
   );
 
-  let currentGuessResult = useRef({});
+  const result = userWhoGuessed?.guessedCorrectly ? "lost" : "won";
 
-  useEffect(() => {
-    const hasGuessData = Boolean(currentGuess !== 0 && guessingUserId);
+  const content = (
+    <>
+      <Paragraph>
+        Congrats {userWhoGuessed?.username} {result}!
+      </Paragraph>
+      <Paragraph>Wait for game master to start new game</Paragraph>
+    </>
+  );
 
-    if (hasGuessData) {
-      if (currentGuess === 0) {
-        setMessage("waiting");
-        currentGuessResult.current = "waiting";
-      }
+  const gameMasterContent = (
+    <>
+      <Paragraph>
+        Congrats {userWhoGuessed?.username} {result}!
+      </Paragraph>
+      <Paragraph>Click 'Next Round' to start new game</Paragraph>
+    </>
+  );
 
-      const skullIndex = currentRoom.stockPile.findIndex(
-        (card) => card === "skull"
-      );
-
-      const result = skullIndex > currentGuess - 1 || skullIndex === -1;
-      setMessage(
-        `${guessingUserId} ${
-          result
-            ? "won this round!"
-            : "looses this round and will loose a card :("
-        }`
-      );
-      currentGuessResult.current = result;
-    }
-  }, [currentGuess]);
-
-  useEffect(() => {
-    if (typeof currentGuessResult.current === "boolean" && open === true) {
-      socket?.emit(
-        "update_mat_status",
-        currentRoom.roomId,
-        guessingUserId,
-        currentUser.id,
-        currentGuessResult.current,
-        (updatedCurrentUser: User) => {
-          console.log("guess result emitted");
-        }
-      );
-    }
-  }, [currentGuessResult.current]);
-
-  return (
-    <div>
-      <Dialog open={open} disableEscapeKeyDown={true}>
-        <DialogContent>
-          <DialogContentText>{message}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <NextRoundButton
-            handleClose={handleClose}
-            resetCurrentGuess={setCurrentGuess}
-            resetGuessingUserId={setGuessingUserId}
-          />
-        </DialogActions>
-      </Dialog>
-    </div>
+  return isGameMaster ? (
+    <Modal
+      open={isThereAGuess}
+      handleClose={() => {}}
+      title="Guess Result"
+      content={gameMasterContent}
+      buttonText="Next Round"
+      onSubmit={() => {
+        resetGame(currentRoomRef);
+      }}
+    />
+  ) : (
+    <Modal
+      open={isThereAGuess}
+      disableEscapeKeyDown={true}
+      handleClose={() => {}}
+      title="Guess Result"
+      content={content}
+    />
   );
 };

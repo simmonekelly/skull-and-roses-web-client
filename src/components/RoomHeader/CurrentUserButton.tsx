@@ -3,13 +3,18 @@ import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { SocketContext } from "../../context/SocketContext";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
+import { UpdateRoomProps } from "../../types/firebaseTypes";
+import { DatabaseContext } from "../../context/DatabaseContext";
 
-export const CurrentUserButton: React.FC = () => {
+export const CurrentUserButton: React.FC<UpdateRoomProps> = ({
+  currentUser,
+  currentRoomRef,
+  roomData,
+}) => {
   const navigate = useNavigate();
-  const { currentUser, socket, room: currentRoom } = useContext(SocketContext);
+  const { removeUserFromRoom } = useContext(DatabaseContext);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -21,10 +26,9 @@ export const CurrentUserButton: React.FC = () => {
   };
 
   const leaveRoom = () => {
-    socket?.emit("leave_room", currentRoom.roomId, currentUser.id, () => {
-      console.log("reset emiited");
-      navigate(`/skull-and-roses-web-client`);
-    });
+    console.log("leave room");
+    removeUserFromRoom(currentUser, currentRoomRef, roomData);
+    navigate(`/skull-and-roses-web-client`);
   };
 
   return (
@@ -38,7 +42,7 @@ export const CurrentUserButton: React.FC = () => {
         onClick={handleClick}
       >
         <Container>
-          {<Face6Icon />} {currentUser.id}
+          {<Face6Icon />} {currentUser.username}
         </Container>
       </Button>
       <Menu

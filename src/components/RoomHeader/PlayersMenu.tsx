@@ -1,15 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { SocketContext } from "../../context/SocketContext";
 import PersonIcon from "@mui/icons-material/Person";
 import { styled } from "styled-components";
 import { Divider } from "@mui/material";
+import { Room } from "../../types/firebaseTypes";
 
-export const PlayersMenu: React.FC = () => {
-  const { room: currentRoom } = useContext(SocketContext);
+type Props = {
+  players: Room["players"];
+};
 
+export const PlayersMenu: React.FC<Props> = ({ players }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -29,7 +31,7 @@ export const PlayersMenu: React.FC = () => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Players: {<PersonIcon />} {currentRoom.players.length}
+        Players: {<PersonIcon />} {Object.keys(players).length}
       </Button>
       <Menu
         id="basic-menu"
@@ -44,8 +46,8 @@ export const PlayersMenu: React.FC = () => {
           <UsersInRoom>
             Users in Room:
             <ul>
-              {currentRoom.players.map((player) => (
-                <li>{player.id}</li>
+              {Object.entries(players).map(([id, player]) => (
+                <li key={id}>{player.username}</li>
               ))}
             </ul>
           </UsersInRoom>

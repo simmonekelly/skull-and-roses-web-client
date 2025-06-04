@@ -2,9 +2,9 @@ import React from "react";
 import SkullHero from "../images/Skull_and_Crossbones.svg";
 import Rose from "../images/Rose_flower.svg";
 import { Header } from "../components/Home/Header";
-import { CreateRoomButton } from "../components/Home/NewRoomButton";
 import { JoinRoom } from "../components/Home/JoinRoom";
 import styled from "styled-components";
+import { CreateRoomButton as FirebaseCreateRoomButton } from "../components/Home/FireBaseNewRoomButton";
 
 export const Home: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ export const Home: React.FC = () => {
           <img alt="home-page-hero" src={SkullHero} />
         </ImageContainer>
         <ButtonsContainer>
-          <CreateRoomButton />
+          <FirebaseCreateRoomButton />
           <JoinRoom />
         </ButtonsContainer>
         <ImageContainer>
