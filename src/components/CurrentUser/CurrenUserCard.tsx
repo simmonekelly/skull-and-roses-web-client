@@ -6,12 +6,10 @@ import { UpdateRoomProps, Card, CardType } from "../../types/firebaseTypes";
 
 export type CardProps = UpdateRoomProps & {
   card: Card;
-  // submittedCardKey: number;
 };
 
 export const CurrenUserCard: React.FC<CardProps> = ({
   card,
-  // submittedCardKey,
   currentUser,
   currentRoomRef,
   roomData,
@@ -27,7 +25,6 @@ export const CurrenUserCard: React.FC<CardProps> = ({
         open={open}
         handleClose={handleClose}
         card={card}
-        // submittedCardKey={submittedCardKey}
         currentUser={currentUser}
         currentRoomRef={currentRoomRef}
         roomData={roomData}

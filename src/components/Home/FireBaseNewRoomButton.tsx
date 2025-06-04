@@ -38,6 +38,7 @@ export const CreateRoomButton: React.FC<CreateRoomButtonProps> = () => {
       createdAt: new Date(),
       players: { [currentUser.id]: currentUser },
       stockPile: null,
+      hasGameStarted: false,
     };
 
     try {

@@ -9,6 +9,7 @@ export const createUser = (username: string, controller: boolean) => {
   cards: createCards(),
   matStatus: false,
   gameControler: controller,
+  activeTurn: false,
  }
 
  return currentUser

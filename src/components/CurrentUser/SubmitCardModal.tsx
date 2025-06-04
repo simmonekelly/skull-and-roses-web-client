@@ -1,13 +1,7 @@
 import React, { useContext } from "react";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-} from "@mui/material";
-import { SubmitCardButton } from "./SubmitCardButton";
 import { CardProps } from "./CurrenUserCard";
 import { DatabaseContext } from "../../context/DatabaseContext";
+import { Modal } from "../Modal";
 
 type Props = CardProps & {
   open: boolean;
@@ -30,17 +24,12 @@ export const SubmitCardModal: React.FC<Props> = ({
   };
 
   return (
-    <div>
-      <Dialog open={open} disableEscapeKeyDown={true} onClick={handleClose}>
-        <DialogContent>
-          <DialogContentText>
-            Do you want to submit the {card.type} card?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <SubmitCardButton handleSubmit={handleSubmit} />
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Modal
+      open={open}
+      handleClose={handleClose}
+      content={`Do you want to submit the ${card.type} card?`}
+      buttonText="Submit Card"
+      onSubmit={handleSubmit}
+    />
   );
 };

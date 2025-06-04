@@ -1,16 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { StockPile } from "../components/StockPile";
-import { RoomHeader } from "../components/RoomHeader/RoomHeader";
 import { styled } from "styled-components";
-import { Divider } from "@mui/material";
 import { DatabaseContext } from "../context/DatabaseContext";
 import { ref, onValue } from "firebase/database";
 import type { Room as RoomType } from "../types/firebaseTypes";
-import { H3 } from "../styles/styles";
-import { CreateUserModal } from "../components/CreateUserModal";
-import { OpponentsSection } from "../components/OpponentsSection";
-import { CurrentUser } from "../components/CurrentUser/CurrentUserView";
+import { Loading } from "./Loading";
+import { Lobby } from "./Lobby";
+import { GameBoard } from "./GameBoard";
 
 export const Room: React.FC = () => {
   const { database } = useContext(DatabaseContext);
@@ -41,54 +37,38 @@ export const Room: React.FC = () => {
   const isLoading = roomData === null || roomData === undefined;
   console.log({ isLoading });
 
+  const currentUserId = sessionStorage.getItem("currentUserNameId");
+  const isCurrentUserInRoom = Boolean(
+    currentUserId !== null && roomData?.players[currentUserId]
+  );
+
   if (isLoading) {
-    return <div>Room Loading</div>;
-  } else {
-    const currentUserId = sessionStorage.getItem("currentUserNameId");
-    const isCurrentUserInRoom = Boolean(
-      currentUserId !== null && roomData.players[currentUserId]
+    return (
+      <Container>
+        <Loading />
+      </Container>
     );
-
+  } else if (!roomData.hasGameStarted) {
     console.log({ isCurrentUserInRoom });
-
-    if (!isCurrentUserInRoom || currentUserId === null) {
-      return (
-        <Container>
-          <CreateUserModal
-            isOpen={!isCurrentUserInRoom}
-            currentRoomRef={currentRoomRef}
-            roomData={roomData}
-          />
-        </Container>
-      );
-    } else {
-      const currentUser = roomData.players[currentUserId];
-
-      return (
-        <Container>
-          <H3>Room: {roomData.name}</H3>
-          <RoomHeader
-            currentRoomRef={currentRoomRef}
-            roomData={roomData}
-            currentUser={currentUser}
-          />
-          {/* <GuessResultModal /> */}
-          <CurrentUser
-            roomData={roomData}
-            currentRoomRef={currentRoomRef}
-            currentUser={currentUser}
-          />
-          <Divider variant="middle" />
-          <StockPile {...roomData} />
-          <Divider variant="middle" />
-          <OpponentsSection
-            roomData={roomData}
-            currentRoomRef={currentRoomRef}
-            currentUser={currentUser}
-          />
-        </Container>
-      );
-    }
+    return (
+      <Container>
+        <Lobby
+          isCurrentUserInRoom={isCurrentUserInRoom}
+          currentRoomRef={currentRoomRef}
+          roomData={roomData}
+        />
+      </Container>
+    );
+  } else {
+    return (
+      <Container>
+        <GameBoard
+          currentUser={roomData.players[currentUserId!]}
+          currentRoomRef={currentRoomRef}
+          roomData={roomData}
+        />
+      </Container>
+    );
   }
 };
 

@@ -6,6 +6,7 @@ export type User = {
   matStatus: boolean;
   gameControler: boolean;
   username: string;
+  activeTurn: boolean;
 };
 
 export enum CardType {
@@ -27,6 +28,7 @@ export type Room = {
   name: string;
   players: Players;
   stockPile: Cards | null;
+  hasGameStarted: boolean;
 };
 
 type Players = Record<string, User>;

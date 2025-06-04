@@ -1,8 +1,12 @@
-// src/components/MyDataComponent.js (Example)
-
 import React, { createContext, useEffect, useState } from "react";
 import { database } from "../index"; // <-- Import your database reference
-import { ref, onValue, update, DatabaseReference } from "firebase/database"; // <-- Import RTDB methods
+import {
+  ref,
+  onValue,
+  update,
+  DatabaseReference,
+  get,
+} from "firebase/database"; // <-- Import RTDB methods
 import { Card, Room, User } from "../types/firebaseTypes";
 
 type DatabaseContextValue = {
@@ -22,6 +26,10 @@ type DatabaseContextValue = {
     currentRoomRef: DatabaseReference,
     roomData: Room,
     submittedCard: Card
+  ) => Promise<void>;
+  updateGameStatus: (
+    status: boolean,
+    currentRoomRef: DatabaseReference
   ) => Promise<void>;
 };
 
@@ -90,13 +98,19 @@ export const DatabaseContextProvider: React.FC<React.PropsWithChildren> = ({
     submittedCard: Card
   ) => {
     const currentUser = roomData.players[user.id];
+    const currentUserIndex = Object.values(roomData.players).indexOf(
+      currentUser
+    );
     delete currentUser.cards[submittedCard.id];
-    console.log({ currentUser });
+    currentUser.activeTurn = false;
 
-    console.log({
-      roomData,
-      submittedCard,
-    });
+    const nextUserIndex =
+      currentUserIndex === Object.values(roomData.players).length - 1
+        ? 0
+        : currentUserIndex + 1;
+
+    const nextPlayer = Object.values(roomData.players)[nextUserIndex] as User;
+    nextPlayer.activeTurn = true;
 
     try {
       await update(currentRoomRef, {
@@ -115,9 +129,39 @@ export const DatabaseContextProvider: React.FC<React.PropsWithChildren> = ({
     }
   };
 
+  const updateGameStatus = async (
+    status: boolean,
+    currentRoomRef: DatabaseReference
+  ) => {
+    const roomData = await get(currentRoomRef);
+
+    const firstPlayer = Object.values(roomData.val().players)[0] as User;
+    firstPlayer.activeTurn = true;
+
+    try {
+      await update(currentRoomRef, {
+        ...roomData.val(),
+        players: {
+          ...roomData.val().players,
+          [firstPlayer.id]: firstPlayer,
+        },
+        hasGameStarted: status,
+      });
+      console.log("game status updated");
+    } catch (error) {
+      console.error("Error updating game status: ", error);
+    }
+  };
+
   return (
     <DatabaseContext.Provider
-      value={{ database, addUserToRoom, removeUserFromRoom, submitCard }}
+      value={{
+        database,
+        addUserToRoom,
+        removeUserFromRoom,
+        submitCard,
+        updateGameStatus,
+      }}
     >
       {children}
     </DatabaseContext.Provider>

@@ -13,8 +13,9 @@ type ModalProps = {
   handleClose: () => void;
   disableEscapeKeyDown?: boolean;
   title?: string;
-  content: JSX.Element;
-  buttonText: string;
+  content: JSX.Element | string;
+  buttonText?: string;
+  onSubmit?: () => void;
 };
 
 export const Modal: React.FC<ModalProps> = ({
@@ -23,16 +24,24 @@ export const Modal: React.FC<ModalProps> = ({
   title,
   content,
   buttonText,
+  disableEscapeKeyDown = false,
+  onSubmit,
 }) => {
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      disableEscapeKeyDown={disableEscapeKeyDown}
+    >
       {title && <DialogTitle id="scroll-dialog-title">{title}</DialogTitle>}
       <DialogContent dividers={true}>
         <DialogContentText>{content}</DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>{buttonText}</Button>
-      </DialogActions>
+      {buttonText && onSubmit && (
+        <DialogActions>
+          <Button onClick={onSubmit}>{buttonText}</Button>
+        </DialogActions>
+      )}
     </Dialog>
   );
 };
