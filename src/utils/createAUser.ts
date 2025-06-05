@@ -15,6 +15,19 @@ export const createUser = (username: string, controller: boolean) => {
  return currentUser
 }
 
+export const createUserWithId = (userId: string, username: string, gameControler: boolean) => {
+ const currentUser = {
+  id: userId,
+  username,
+  cards: createCards(),
+  matStatus: false,
+  gameControler,
+  activeTurn: false,
+ }
+
+ return currentUser
+}
+
 export const createCards = (): Cards => {
  const cards = {
   [uuidv4()]: {type: CardType.Rose, id: ''},

@@ -86,8 +86,9 @@ export const DatabaseContextProvider: React.FC<React.PropsWithChildren> = ({
     roomData: Room
   ) => {
     try {
+      delete roomData.players[user.id];
       await update(currentRoomRef, {
-        players: delete roomData.players[user.id],
+        players: { ...roomData.players },
       });
       console.log("user removed from room");
     } catch (error) {
