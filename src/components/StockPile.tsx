@@ -2,6 +2,7 @@ import React from "react";
 import { UnnamedCard } from "./UnnamedCard";
 import { styled } from "styled-components";
 import Grid from "@mui/material/Grid2";
+import Item from "@mui/material/Grid2";
 import { H2, Paragraph } from "../styles/styles";
 import type { Room } from "../types/firebaseTypes";
 
@@ -17,10 +18,18 @@ export const StockPile: React.FC<Room> = ({ stockPile }) => {
       </Paragraph>
       {!isStockPileEmpty && Object.keys(stockPile).length > 0 && (
         <div>
-          <Grid container spacing={2} justifyContent={"center"}>
+          <Grid
+            container
+            rowSpacing={2}
+            justifyContent={"center"}
+            columnSpacing={2}
+            padding={2}
+          >
             {Object.entries(stockPile).map(([index, card]) => (
-              <Grid size={2}>
-                <UnnamedCard />
+              <Grid size={{ xs: 3, md: 2, lg: 2, xl: 2 }}>
+                <Item>
+                  <UnnamedCard />
+                </Item>
               </Grid>
             ))}
           </Grid>
@@ -31,7 +40,7 @@ export const StockPile: React.FC<Room> = ({ stockPile }) => {
 };
 
 const SectionContainer = styled.div`
-  width: 60%;
+  width: 90%;
   margin: auto;
   border: 1px solid black;
   border-radius: 4px;

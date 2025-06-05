@@ -10,7 +10,7 @@ import { Paragraph } from "../styles/styles";
 export const Home: React.FC = () => {
   return (
     <div>
-      <Header />
+      <Header inRoom={false} />
       <MainContent>
         <ImageContainer>
           <img alt="home-page-hero" src={SkullHero} />

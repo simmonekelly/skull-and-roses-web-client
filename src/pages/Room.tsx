@@ -7,6 +7,7 @@ import type { Room as RoomType } from "../types/firebaseTypes";
 import { Lobby } from "./Lobby";
 import { GameBoard } from "./GameBoard";
 import { RoomDoesNotExist } from "./RoomDoesNotExist";
+import { TABLET } from "../styles/styles";
 
 export const Room: React.FC = () => {
   const { database } = useContext(DatabaseContext);
@@ -28,9 +29,6 @@ export const Room: React.FC = () => {
 
   const isLoading = roomData === null || roomData === undefined;
   const currentUserId = sessionStorage.getItem("currentUserNameId");
-  const isCurrentUserInRoom = Boolean(
-    currentUserId !== null && roomData?.players[currentUserId]
-  );
 
   if (isLoading) {
     return (
@@ -39,10 +37,16 @@ export const Room: React.FC = () => {
       </Container>
     );
   } else if (!roomData.hasGameStarted) {
+    const isCurrentUserInRoom = (): boolean => {
+      const hasId = currentUserId !== null;
+
+      if (!hasId) return false;
+      return Boolean(roomData.players && currentUserId in roomData.players);
+    };
     return (
       <Container>
         <Lobby
-          isCurrentUserInRoom={isCurrentUserInRoom}
+          isCurrentUserInRoom={isCurrentUserInRoom()}
           currentRoomRef={currentRoomRef}
           roomData={roomData}
         />
@@ -62,5 +66,9 @@ export const Room: React.FC = () => {
 };
 
 const Container = styled.div`
-  padding: 30px;
+  padding: 10px;
+
+  @media (min-width: ${TABLET.min}px) and (max-width: ${TABLET.max}px) {
+    padding: 30px;
+  }
 `;

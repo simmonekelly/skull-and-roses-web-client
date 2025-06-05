@@ -8,7 +8,7 @@ export const RoomDoesNotExist: React.FC = () => {
   const navigate = useNavigate();
   return (
     <div>
-      <Header />
+      <Header inRoom={false} />
       <H2>Woops!</H2>
       <Paragraph>Doesn't look like that room exists</Paragraph>
       <Paragraph>Head back to the hope page and try again</Paragraph>

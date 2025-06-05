@@ -6,6 +6,7 @@ import { CreateUserModal } from "../components/CreateUserModal";
 import { DatabaseReference } from "firebase/database";
 import { Button } from "../components/UI/Button";
 import { DatabaseContext } from "../context/DatabaseContext";
+import { Header } from "../components/Home/Header";
 
 type Props = {
   isCurrentUserInRoom: boolean;
@@ -28,19 +29,27 @@ export const Lobby: React.FC<Props> = ({
 
   return (
     <Container>
+      <Header
+        inRoom={true}
+        currentRoomRef={currentRoomRef}
+        roomData={roomData}
+        currentUser={roomData.players[currentUserId!]}
+      />
       <CreateUserModal
         isOpen={!isCurrentUserInRoom}
         currentRoomRef={currentRoomRef}
         roomData={roomData}
       />
-      <H3>Lobby For Room:</H3>
-      <H2>{roomData.name}</H2>
-      <Paragraph>Current Players:</Paragraph>
-      <ul>
+      <H2>Lobby For Room:</H2>
+      <H3>{roomData.name}</H3>
+      <Paragraph style={{ marginTop: "20px" }}>
+        Current Players In Room:
+      </Paragraph>
+      <StyledList>
         {Object.entries(roomData.players).map(([key, value]) => (
           <li key={key}>{value.username}</li>
         ))}
-      </ul>
+      </StyledList>
       {isMainUser &&
         (canUserStartGame ? (
           <Button
@@ -60,4 +69,9 @@ export const Lobby: React.FC<Props> = ({
 
 const Container = styled.div`
   padding: 30px;
+`;
+
+const StyledList = styled.ul`
+  list-style-type: none;
+  padding: 0;
 `;

@@ -1,8 +1,7 @@
 import React from "react";
 import { UnnamedCard } from "./UnnamedCard";
 import { styled } from "styled-components";
-import { UserMat } from "./UserMat";
-import { H2, H3 } from "../styles/styles";
+import { H2, H3, TABLET } from "../styles/styles";
 import type { CurrentRoom } from "../types/firebaseTypes";
 
 export const OpponentsSection: React.FC<CurrentRoom> = ({
@@ -31,9 +30,6 @@ export const OpponentsSection: React.FC<CurrentRoom> = ({
                     // Using cardIndex as a key if card objects don't have unique IDs
                     <UnnamedCard key={index} />
                   ))}
-                <MatContainer>
-                  <UserMat status={player.matStatus} />
-                </MatContainer>
               </CardContainer>
             </StyledPlayerContainer>
           ))}
@@ -50,29 +46,31 @@ const StyledContainer = styled.div`
 
 const PlayersContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
+
+  @media (min-width: ${TABLET.min}px) {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
 `;
 
 const StyledPlayerContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 1rem;
-  width: 20%;
   border: 1px solid black;
   border-radius: 4px;
   padding: 10px;
+
+  @media (min-width: ${TABLET.min}px) {
+    width: 20%;
+  }
 `;
 
 const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-`;
-
-const MatContainer = styled.div`
-  padding: 10px;
-  margin: 10px;
-  border: 1px solid black;
-  border-radius: 4px;
+  justify-content: space-evenly;
+  flex-direction: row;
 `;
