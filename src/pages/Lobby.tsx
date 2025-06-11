@@ -58,7 +58,7 @@ export const Lobby: React.FC<Props> = ({
             }}
             buttonType="solid"
           >
-            Start Game
+            Start Game!
           </Button>
         ) : (
           <Paragraph>Waiting for other players to join...</Paragraph>
